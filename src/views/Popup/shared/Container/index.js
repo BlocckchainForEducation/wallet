@@ -7,6 +7,9 @@ const useStyles = makeStyles({
     height: "548px",
     border: "1px solid red",
     margin: "auto",
+    display: "grid",
+    gridTemplateColumns: "1fr",
+    gridTemplateRows: "min-content auto",
   },
 });
 

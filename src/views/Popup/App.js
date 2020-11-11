@@ -1,6 +1,6 @@
 import React from "react";
 
-import { MemoryRouter as Router, Route, Switch } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import SetupPassword from "./SetupPassword";
 import CreateWallet from "./CreateWallet";
 import Mnemonic from "./Mnemonic";
