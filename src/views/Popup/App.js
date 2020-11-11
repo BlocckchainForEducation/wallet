@@ -12,11 +12,12 @@ import PromptRequest from "./PromptRequest";
 import { getRedirect } from "./utils/redirect-utils";
 
 import "fontsource-roboto";
-import { CssBaseline } from "@material-ui/core";
+import { Box, CssBaseline } from "@material-ui/core";
 
 function App() {
   return (
-    <>
+    // box mt-5 just for dev env
+    <Box mt={5}>
       <CssBaseline></CssBaseline>
       <Router>
         <Switch>
@@ -30,7 +31,7 @@ function App() {
           {getRedirect()}
         </Switch>
       </Router>
-    </>
+    </Box>
   );
 }
 
