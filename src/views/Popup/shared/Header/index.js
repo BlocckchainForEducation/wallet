@@ -1,22 +1,28 @@
 import React from "react";
 import logo from "assets/imgs/logo.png";
 import { makeStyles, Typography } from "@material-ui/core";
+import AddIcon from "@material-ui/icons/Add";
 
 const useStyles = makeStyles((theme) => ({
   root: {
     padding: theme.spacing(1.5, 2),
     backgroundColor: "#f1f2f6",
     position: "relative",
-    // textAlign: "center",
   },
   logo: {
     position: "absolute",
     width: "2rem",
     height: "2rem",
   },
+  icon: {
+    position: "absolute",
+    right: "0",
+    top: "50%",
+    transform: "translateY(-50%)",
+  },
 }));
 
-export default function Header() {
+export default function Header({ icon }) {
   const cls = useStyles();
   return (
     <div className={cls.root}>
@@ -24,6 +30,7 @@ export default function Header() {
       <Typography variant="h5" align="center">
         B4E Wallet
       </Typography>
+      {icon ? React.cloneElement(icon, { className: cls.icon }) : null}
     </div>
   );
 }
