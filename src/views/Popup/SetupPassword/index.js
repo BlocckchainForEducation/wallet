@@ -1,11 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import Checkbox from "@material-ui/core/Checkbox";
-import Link from "@material-ui/core/Link";
-import Grid from "@material-ui/core/Grid";
 import Box from "@material-ui/core/Box";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
@@ -13,6 +9,10 @@ import { makeStyles } from "@material-ui/core/styles";
 
 import Container from "../shared/Container";
 import Header from "../shared/Header";
+
+import { setWalletPassword } from "../redux";
+import { useDispatch } from "react-redux";
+import history from "../../../utils/router-history";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -36,6 +36,13 @@ const useStyles = makeStyles((theme) => ({
 
 export default function SetupPassword() {
   const classes = useStyles();
+  const [state, setState] = useState({
+    password: "",
+    repassword: "",
+    error: null,
+  });
+
+  const dp = useDispatch();
 
   return (
     <div>
@@ -54,10 +61,53 @@ export default function SetupPassword() {
               Thiết lập mật khẩu cho ví:
             </Typography>
             <form className={classes.form} noValidate>
-              <TextField variant="outlined" margin="normal" required fullWidth id="password" name="password" label="Mật khẩu" type="password" autoFocus />
-              <TextField variant="outlined" margin="normal" required fullWidth id="repassword" name="repassword" label="Nhập lại mật khẩu" type="password" />
-              {/* <FormControlLabel control={<Checkbox value="remember" color="primary" />} label="Remember me" /> */}
-              <Button type="submit" fullWidth variant="contained" color="primary" className={classes.submit}>
+              <TextField
+                variant="outlined"
+                margin="normal"
+                required
+                fullWidth
+                id="password"
+                name="password"
+                label="Mật khẩu"
+                type="password"
+                autoFocus
+                value={state.password}
+                onChange={(e) => setState({ ...state, password: e.target.value, error: null })}
+                error={state.error}
+                helperText={state.error}
+              />
+              <TextField
+                variant="outlined"
+                margin="normal"
+                required
+                fullWidth
+                id="repassword"
+                name="repassword"
+                label="Nhập lại mật khẩu"
+                type="password"
+                value={state.repassword}
+                onChange={(e) => setState({ ...state, repassword: e.target.value, error: null })}
+                error={state.error}
+                helperText={state.error}
+              />
+              <Button
+                type="submit"
+                fullWidth
+                variant="contained"
+                color="primary"
+                className={classes.submit}
+                onClick={(e) => {
+                  e.preventDefault();
+                  if (state.password !== state.repassword) {
+                    setState({ ...state, error: "Mật khẩu không khớp!" });
+                  } else if (state.password.length < 8) {
+                    setState({ ...state, error: "Mật khẩu cần có ít nhất 8 ký tự!" });
+                  } else {
+                    dp(setWalletPassword(state.password));
+                    history.push("/create-wallet");
+                  }
+                }}
+              >
                 ok
               </Button>
             </form>

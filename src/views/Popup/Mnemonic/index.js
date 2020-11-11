@@ -1,5 +1,7 @@
 import { Box, Button, makeStyles, TextField, Typography } from "@material-ui/core";
 import React from "react";
+import { useSelector } from "react-redux";
+import history from "../../../utils/router-history";
 import Container from "../shared/Container";
 import Header from "../shared/Header";
 
@@ -16,6 +18,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Mnemonic() {
   const cls = useStyles();
+  const mnemonic = useSelector((state) => state.mnemonic);
   return (
     <div>
       <Container>
@@ -24,8 +27,15 @@ export default function Mnemonic() {
           <Typography variant="h4">Mã mnemonic bí mật</Typography>
           <Typography>Mã mnemonic giúp bạn dễ dàng sao lưu vào khôi phục lại các tài khoản trong ví. Hãy lưu trữ mã này một cách an toàn và bảo mật.</Typography>
           <Typography>CẢNH BÁO: Không bao giờ tiết lộ mã này. Bất kì ai có mã này sẽ có quyền sử dụng các tài khoản của bạn.</Typography>
-          <TextField className={cls.mnemonic} variant="outlined" multiline rows={5} fullWidth label="Mã mnemonic" defaultValue="ádfád" InputLabelProps={{ shrink: true }}></TextField>
-          <Button variant="contained" color="primary" fullWidth>
+          <TextField className={cls.mnemonic} variant="outlined" multiline rows={5} fullWidth label="Mã mnemonic" defaultValue={mnemonic} InputLabelProps={{ shrink: true }}></TextField>
+          <Button
+            variant="contained"
+            color="primary"
+            fullWidth
+            onClick={(e) => {
+              history.push("/accounts");
+            }}
+          >
             ok
           </Button>
         </Box>

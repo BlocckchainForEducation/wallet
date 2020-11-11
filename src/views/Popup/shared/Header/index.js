@@ -5,7 +5,7 @@ import AddIcon from "@material-ui/icons/Add";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    padding: theme.spacing(1.5, 2),
+    padding: theme.spacing(2),
     backgroundColor: "#f1f2f6",
     position: "relative",
   },
