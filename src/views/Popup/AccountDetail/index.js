@@ -1,14 +1,17 @@
 import React, { useState } from "react";
 import { Avatar, Box, Button, IconButton, InputAdornment, makeStyles, TextField } from "@material-ui/core";
-import Visibility from "@material-ui/icons/Visibility";
-
 import Container from "../shared/Container";
-import { VisibilityOff } from "@material-ui/icons";
+import { VisibilityOff, Visibility } from "@material-ui/icons";
+import { renameAccount } from "../redux";
+import { useDispatch } from "react-redux";
 
 const useStyles = makeStyles((theme) => ({
   root: {
     "& > *": {
       marginBottom: theme.spacing(4),
+      "&:last-child": {
+        marginBottom: "0",
+      },
     },
   },
   avatar: {
@@ -18,13 +21,10 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function AccountDetail() {
+export default function AccountDetail(props) {
   const cls = useStyles();
-  const [state, setState] = useState({ accountName: "acc1", pubkey: "asdfasdfasdfaf", prikey: "asdfasdfad", showPassword: false });
-
-  const handleChange = (prop) => (event) => {
-    setState({ ...state, [prop]: event.target.value });
-  };
+  const { id, avatar, name, publicKey, privateKey, cb } = props;
+  const [state, setState] = useState({ accountName: name, showPassword: false });
 
   const handleClickShowPassword = () => {
     setState({ ...state, showPassword: !state.showPassword });
@@ -34,13 +34,21 @@ export default function AccountDetail() {
     event.preventDefault();
   };
 
+  const dp = useDispatch();
   return (
     <div>
       <Container>
         <Box className={cls.root} px={3}>
-          <Avatar className={cls.avatar}></Avatar>
-          <TextField variant="outlined" label="Tên tài khoản" fullWidth InputLabelProps={{ shrink: true }} value={state.accountName}></TextField>
-          <TextField variant="outlined" label="Khóa công khai" multiline rows={4} fullWidth InputLabelProps={{ shrink: true }} value={state.pubkey}></TextField>
+          <Avatar className={cls.avatar}>{avatar}</Avatar>
+          <TextField
+            variant="outlined"
+            label="Tên tài khoản"
+            fullWidth
+            InputLabelProps={{ shrink: true }}
+            value={state.accountName}
+            onChange={(e) => setState({ ...state, accountName: e.target.value })}
+          ></TextField>
+          <TextField variant="outlined" label="Khóa công khai" multiline rows={4} fullWidth InputLabelProps={{ shrink: true }} value={publicKey}></TextField>
           <TextField
             variant="outlined"
             label="Khóa bí mật"
@@ -58,11 +66,19 @@ export default function AccountDetail() {
                 </InputAdornment>
               ),
             }}
-            value={state.prikey}
+            value={privateKey}
           ></TextField>
 
           <Box textAlign="right">
-            <Button variant="contained" color="primary" fullWidth>
+            <Button
+              variant="contained"
+              color="primary"
+              fullWidth
+              onClick={(e) => {
+                dp(renameAccount({ id: id, name: state.accountName }));
+                cb();
+              }}
+            >
               Ok
             </Button>
           </Box>

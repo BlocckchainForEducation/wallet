@@ -1,6 +1,6 @@
 import React from "react";
 import logo from "assets/imgs/logo.png";
-import { makeStyles, Typography } from "@material-ui/core";
+import { Avatar, IconButton, makeStyles, Typography } from "@material-ui/core";
 import AddIcon from "@material-ui/icons/Add";
 
 const useStyles = makeStyles((theme) => ({
@@ -11,8 +11,8 @@ const useStyles = makeStyles((theme) => ({
   },
   logo: {
     position: "absolute",
-    width: "2rem",
-    height: "2rem",
+    top: "50%",
+    transform: "translateY(-50%)",
   },
   icon: {
     position: "absolute",
@@ -22,15 +22,20 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Header({ icon }) {
+export default function Header({ icon, hdClick }) {
   const cls = useStyles();
   return (
     <div className={cls.root}>
-      <img src={logo} alt="Logo" className={cls.logo} />
+      {/* <img alt="Logo" className={cls.logo} /> */}
+      <Avatar src={logo} className={cls.logo}></Avatar>
       <Typography variant="h5" align="center">
         B4E Wallet
       </Typography>
-      {icon ? React.cloneElement(icon, { className: cls.icon }) : null}
+      {icon ? (
+        <IconButton onClick={hdClick} className={cls.icon}>
+          {icon}
+        </IconButton>
+      ) : null}
     </div>
   );
 }

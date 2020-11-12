@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import { Box, Button, makeStyles, Typography } from "@material-ui/core";
+import { Box, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, makeStyles, TextField, Typography } from "@material-ui/core";
 import AddIcon from "@material-ui/icons/Add";
 import VerticalAlignBottomIcon from "@material-ui/icons/VerticalAlignBottom";
 import Container from "../shared/Container";
 import Header from "../shared/Header";
-import { setMnemonic } from "../redux";
+import { createNewWallet, restoreWallet } from "../redux";
 import { useDispatch } from "react-redux";
 import { Redirect } from "react-router-dom";
 
@@ -18,7 +18,7 @@ const useStyles = makeStyles((theme) => ({
 function OptionBox({ icon, title, subtitle, buttonContent, hdClick }) {
   const cls = useStyles();
   return (
-    <Box border="1px solid grey" borderRadius="8px" p={2} textAlign="center">
+    <Box border="1px solid grey" borderRadius="8px" paddingBottom={2} paddingTop={1} textAlign="center">
       {icon}
       <Typography variant="h5">{title}</Typography>
       <Typography variant="subtitle1">{subtitle}</Typography>
@@ -44,19 +44,68 @@ const useMainStyles = makeStyles((theme) => ({
   },
 }));
 
+function InputMnemonicDialog({ setDialog, setRedirect }) {
+  const [state, setState] = useState({
+    mnemonic: "",
+    error: null,
+  });
+  const dp = useDispatch();
+
+  function hdCancel(e) {
+    setDialog(null);
+  }
+  function hdOk(e) {
+    if (bip39.validateMnemonic(state.mnemonic)) {
+      dp(restoreWallet(state.mnemonic));
+      setRedirect(<Redirect to="/accounts"></Redirect>);
+    } else {
+      setState({ ...state, error: "Mã mnemonic không hợp lệ!" });
+    }
+  }
+
+  return (
+    <Dialog open={true}>
+      <DialogTitle>Khôi phục ví</DialogTitle>
+
+      <DialogContent>
+        <DialogContentText>Nhập chính xác mã mnemonic để khôi phục lại ví.</DialogContentText>
+        <TextField
+          autoFocus
+          margin="dense"
+          id="mnemonic"
+          label="Mã mnemonic"
+          fullWidth
+          value={state.mnemonic}
+          onChange={(e) => setState({ mnemonic: e.target.value })}
+          error={Boolean(state.error)}
+          helperText={state.error}
+        ></TextField>
+      </DialogContent>
+
+      <DialogActions>
+        <Button onClick={hdCancel}>Cancel</Button>
+        <Button onClick={hdOk}>Ok</Button>
+      </DialogActions>
+    </Dialog>
+  );
+}
+
 export default function CreateWallet() {
   const cls = useMainStyles();
   const dp = useDispatch();
   const [redirect, setRedirect] = useState(null);
+  const [dialog, setDialog] = useState(null);
 
   function hdCreatWalletClick(e) {
-    const mnemonic = bip39.generateMnemonic();
-    dp(setMnemonic(mnemonic));
+    dp(createNewWallet());
     setRedirect(<Redirect to="/mnemonic"></Redirect>);
   }
+
   function hdRestoreWalletClick(e) {
-    setRedirect(<Redirect to="/restore-wallet"></Redirect>);
+    const dialog = <InputMnemonicDialog setDialog={setDialog} setRedirect={setRedirect}></InputMnemonicDialog>;
+    setDialog(dialog);
   }
+
   return (
     <Container>
       {redirect}
@@ -76,6 +125,7 @@ export default function CreateWallet() {
           buttonContent="Khôi phục"
           hdClick={hdRestoreWalletClick}
         />
+        {dialog}
       </div>
     </Container>
   );

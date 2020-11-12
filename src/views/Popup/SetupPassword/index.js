@@ -45,6 +45,18 @@ export default function SetupPassword() {
 
   const dp = useDispatch();
 
+  function hdSubmit(e) {
+    e.preventDefault();
+    if (state.password !== state.repassword) {
+      setState({ ...state, error: "Mật khẩu không khớp!" });
+    } else if (state.password.length < 8) {
+      setState({ ...state, error: "Mật khẩu cần có ít nhất 8 ký tự!" });
+    } else {
+      dp(setWalletPassword(state.password));
+      setRedirect(<Redirect to="/create-wallet"></Redirect>);
+    }
+  }
+
   return (
     <div>
       <Container>
@@ -75,7 +87,7 @@ export default function SetupPassword() {
                 autoFocus
                 value={state.password}
                 onChange={(e) => setState({ ...state, password: e.target.value, error: null })}
-                error={state.error}
+                error={Boolean(state.error)}
                 helperText={state.error}
               />
               <TextField
@@ -89,28 +101,10 @@ export default function SetupPassword() {
                 type="password"
                 value={state.repassword}
                 onChange={(e) => setState({ ...state, repassword: e.target.value, error: null })}
-                error={state.error}
+                error={Boolean(state.error)}
                 helperText={state.error}
               />
-              <Button
-                type="submit"
-                fullWidth
-                variant="contained"
-                color="primary"
-                className={classes.submit}
-                onClick={(e) => {
-                  e.preventDefault();
-                  if (state.password !== state.repassword) {
-                    setState({ ...state, error: "Mật khẩu không khớp!" });
-                  } else if (state.password.length < 8) {
-                    setState({ ...state, error: "Mật khẩu cần có ít nhất 8 ký tự!" });
-                  } else {
-                    dp(setWalletPassword(state.password));
-                    // history.push("/create-wallet");
-                    setRedirect(<Redirect to="/create-wallet"></Redirect>);
-                  }
-                }}
-              >
+              <Button type="submit" fullWidth variant="contained" color="primary" className={classes.submit} onClick={hdSubmit}>
                 ok
               </Button>
             </form>

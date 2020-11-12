@@ -14,6 +14,9 @@ const useStyles = makeStyles((theme) => ({
   mnemonic: {
     marginTop: theme.spacing(3),
   },
+  button: {
+    marginBottom: "0",
+  },
 }));
 
 export default function Mnemonic() {
@@ -40,6 +43,7 @@ export default function Mnemonic() {
             InputLabelProps={{ shrink: true }}
           ></TextField>
           <Button
+            className={cls.button}
             variant="contained"
             color="primary"
             fullWidth

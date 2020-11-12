@@ -1,47 +1,79 @@
-import React from "react";
-import { Avatar, Box, Divider, IconButton, List, ListItem, ListItemAvatar, ListItemSecondaryAction, ListItemText } from "@material-ui/core";
+import React, { useState } from "react";
+import {
+  Avatar,
+  Box,
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  Divider,
+  IconButton,
+  List,
+  ListItem,
+  ListItemAvatar,
+  ListItemSecondaryAction,
+  ListItemText,
+} from "@material-ui/core";
 import SettingsIcon from "@material-ui/icons/Settings";
 import Container from "../shared/Container";
 import Header from "../shared/Header";
 import { Add } from "@material-ui/icons";
-
-function generate(element) {
-  return [0, 1, 2].map((value) =>
-    React.cloneElement(element, {
-      key: value,
-    })
-  );
-}
+import { useDispatch, useSelector } from "react-redux";
+import { createAccount } from "../redux";
+import AccountDetail from "../AccountDetail";
 
 export default function Accounts() {
-  const AddAccountBtn = (
-    <IconButton>
-      <Add fontSize="large"></Add>
-    </IconButton>
-  );
+  const accounts = useSelector((state) => state.accounts);
+  const [dialog, setDialog] = useState(null);
+
+  const dp = useDispatch();
+
+  function hdAddAccount(e) {
+    dp(createAccount());
+  }
+
+  function hdSettingClick(e, id) {
+    console.log(id);
+    const acc = accounts.find((acc) => acc.id == id);
+
+    function closeDiaglog() {
+      setDialog(null);
+    }
+
+    const content = <AccountDetail {...acc} cb={closeDiaglog}></AccountDetail>;
+    const dialog = (
+      <Dialog open={true}>
+        <DialogContent>{content}</DialogContent>
+      </Dialog>
+    );
+    setDialog(dialog);
+  }
+
   return (
     <div>
       <Container>
-        <Header icon={AddAccountBtn}></Header>
+        <Header icon={<Add fontSize="large" />} hdClick={hdAddAccount}></Header>
         <Box>
           <List>
-            {generate(
-              <>
+            {accounts.map((acc, index) => (
+              <React.Fragment key={acc.id}>
                 <ListItem>
                   <ListItemAvatar>
-                    <Avatar></Avatar>
+                    <Avatar>{acc.avatar}</Avatar>
                   </ListItemAvatar>
-                  <ListItemText>Lorem ipsum dolor sit amet.</ListItemText>
+                  <ListItemText>{acc.name}</ListItemText>
                   <ListItemSecondaryAction>
-                    <IconButton edge="end">
+                    <IconButton edge="end" onClick={(e) => hdSettingClick(e, acc.id)}>
                       <SettingsIcon></SettingsIcon>
                     </IconButton>
                   </ListItemSecondaryAction>
                 </ListItem>
                 <Divider></Divider>
-              </>
-            )}
+              </React.Fragment>
+            ))}
           </List>
+          {dialog}
         </Box>
       </Container>
     </div>

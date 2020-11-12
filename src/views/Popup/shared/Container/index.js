@@ -3,8 +3,10 @@ import React from "react";
 
 const useStyles = makeStyles({
   root: {
-    width: "418px",
-    height: "548px",
+    width: "400px",
+    height: "568px",
+    // height: "600px",
+    overflow: "auto",
     border: "1px solid red",
     margin: "auto",
     display: "grid",
