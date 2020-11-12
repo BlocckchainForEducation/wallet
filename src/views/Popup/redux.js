@@ -4,13 +4,13 @@ import { uid } from "uid";
 const bip39 = require("bip39");
 const HdKey = require("hdkey");
 
-const accountSchema = {
-  id: "",
-  name: "",
-  publicKey: "",
-  privateKey: "",
-  avatarSeed: "",
-};
+// const accountSchema = {
+//   id: "",
+//   name: "",
+//   publicKey: "",
+//   privateKey: "",
+//   avatarSeed: "",
+// };
 
 const popupSlice = createSlice({
   name: "popup",
@@ -20,7 +20,8 @@ const popupSlice = createSlice({
     accounts: [],
     // hdkey: null,
     //create default wallet, just for dev:
-    hdkey: HdKey.fromMasterSeed(bip39.mnemonicToSeedSync(bip39.generateMnemonic())),
+    // TODO: remove this in production code
+    hdkey: HdKey.fromMasterSeed(bip39.mnemonicToSeedSync(bip39.generateMnemonic())).toJSON(),
   },
   reducers: {
     setWalletPassword: (state, action) => {
@@ -49,7 +50,7 @@ const popupSlice = createSlice({
       state.accounts.push(newAcc);
     },
     renameAccount: (state, action) => {
-      const acc = state.accounts.find((acc) => acc.id == action.payload.id);
+      const acc = state.accounts.find((acc) => acc.id === action.payload.id);
       acc.name = action.payload.name;
     },
   },

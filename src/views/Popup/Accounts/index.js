@@ -19,7 +19,7 @@ export default function Accounts() {
     dp(createAccount());
   }
   function hdSettingClick(e, id) {
-    const acc = accounts.find((acc) => acc.id == id);
+    const acc = accounts.find((acc) => acc.id === id);
 
     function closeDiaglog() {
       setDialog(null);
