@@ -4,6 +4,7 @@ import Container from "../shared/Container";
 import { VisibilityOff, Visibility } from "@material-ui/icons";
 import { renameAccount } from "../redux";
 import { useDispatch } from "react-redux";
+import Jazzicon from "react-jazzicon/lib/Jazzicon";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -23,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function AccountDetail(props) {
   const cls = useStyles();
-  const { id, avatar, name, publicKey, privateKey, cb } = props;
+  const { id, avatarSeed, name, publicKey, privateKey, cb } = props;
   const [state, setState] = useState({ accountName: name, showPassword: false });
 
   const handleClickShowPassword = () => {
@@ -39,7 +40,9 @@ export default function AccountDetail(props) {
     <div>
       <Container>
         <Box className={cls.root} px={3}>
-          <Avatar className={cls.avatar}>{avatar}</Avatar>
+          <Avatar className={cls.avatar}>
+            <Jazzicon diameter={100} seed={avatarSeed}></Jazzicon>
+          </Avatar>
           <TextField
             variant="outlined"
             label="Tên tài khoản"

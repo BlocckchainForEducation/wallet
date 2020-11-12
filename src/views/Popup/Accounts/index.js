@@ -1,27 +1,13 @@
-import React, { useState } from "react";
-import {
-  Avatar,
-  Box,
-  Button,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogTitle,
-  Divider,
-  IconButton,
-  List,
-  ListItem,
-  ListItemAvatar,
-  ListItemSecondaryAction,
-  ListItemText,
-} from "@material-ui/core";
+import { Avatar, Box, Dialog, DialogContent, Divider, IconButton, List, ListItem, ListItemAvatar, ListItemSecondaryAction, ListItemText } from "@material-ui/core";
+import { Add } from "@material-ui/icons";
 import SettingsIcon from "@material-ui/icons/Settings";
+import React, { useState } from "react";
+import Jazzicon from "react-jazzicon/lib/Jazzicon";
+import { useDispatch, useSelector } from "react-redux";
+import AccountDetail from "../AccountDetail";
+import { createAccount } from "../redux";
 import Container from "../shared/Container";
 import Header from "../shared/Header";
-import { Add } from "@material-ui/icons";
-import { useDispatch, useSelector } from "react-redux";
-import { createAccount } from "../redux";
-import AccountDetail from "../AccountDetail";
 
 export default function Accounts() {
   const accounts = useSelector((state) => state.accounts);
@@ -32,9 +18,7 @@ export default function Accounts() {
   function hdAddAccount(e) {
     dp(createAccount());
   }
-
   function hdSettingClick(e, id) {
-    console.log(id);
     const acc = accounts.find((acc) => acc.id == id);
 
     function closeDiaglog() {
@@ -60,7 +44,9 @@ export default function Accounts() {
               <React.Fragment key={acc.id}>
                 <ListItem>
                   <ListItemAvatar>
-                    <Avatar>{acc.avatar}</Avatar>
+                    <Avatar>
+                      <Jazzicon diameter={50} seed={acc.avatarSeed}></Jazzicon>
+                    </Avatar>
                   </ListItemAvatar>
                   <ListItemText>{acc.name}</ListItemText>
                   <ListItemSecondaryAction>

@@ -4,7 +4,7 @@ import React from "react";
 const useStyles = makeStyles({
   root: {
     width: "400px",
-    height: "568px",
+    height: "548px",
     // height: "600px",
     overflow: "auto",
     border: "1px solid red",

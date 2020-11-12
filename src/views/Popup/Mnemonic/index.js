@@ -8,11 +8,11 @@ import Header from "../shared/Header";
 const useStyles = makeStyles((theme) => ({
   root: {
     "& > *": {
-      marginBottom: theme.spacing(3),
+      marginBottom: theme.spacing(2.5),
     },
   },
   mnemonic: {
-    marginTop: theme.spacing(3),
+    marginTop: theme.spacing(2),
   },
   button: {
     marginBottom: "0",
@@ -31,7 +31,9 @@ export default function Mnemonic() {
         <Box p={2} className={cls.root}>
           <Typography variant="h4">Mã mnemonic bí mật</Typography>
           <Typography>Mã mnemonic giúp bạn dễ dàng sao lưu vào khôi phục lại các tài khoản trong ví. Hãy lưu trữ mã này một cách an toàn và bảo mật.</Typography>
-          <Typography>CẢNH BÁO: Không bao giờ tiết lộ mã này. Bất kì ai có mã này sẽ có quyền sử dụng các tài khoản của bạn.</Typography>
+          <Typography>
+            <b>CẢNH BÁO:</b> Không bao giờ tiết lộ mã này. Bất kì ai có mã này sẽ có quyền sử dụng các tài khoản của bạn.
+          </Typography>
           <TextField
             className={cls.mnemonic}
             variant="outlined"
