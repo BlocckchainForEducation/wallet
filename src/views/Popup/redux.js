@@ -54,8 +54,11 @@ const popupSlice = createSlice({
       const acc = state.accounts.find((acc) => acc.id === action.payload.id);
       acc.name = action.payload.name;
     },
+    lockWallet: (state, action) => {
+      state.shouldAskPassword = true;
+    },
   },
 });
 
 export default popupSlice.reducer;
-export const { setWalletPassword, createNewWallet, restoreWallet, createAccount, renameAccount } = popupSlice.actions;
+export const { setWalletPassword, createNewWallet, restoreWallet, createAccount, renameAccount, lockWallet } = popupSlice.actions;

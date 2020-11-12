@@ -1,9 +1,21 @@
 import storeCreatorFactory from "reduxed-chrome-storage";
 import { createStore } from "redux";
-import reducer from "./views/Popup/redux";
-console.log("Hello Background");
+import reducer, { lockWallet } from "./views/Popup/redux";
 
-(async () => {
-  const store = await storeCreatorFactory({ createStore })(reducer);
-  console.log(store);
-})();
+const storeCreator = storeCreatorFactory({ createStore });
+let store;
+const getStore = async () => {
+  if (store) return store;
+  store = await storeCreator(reducer);
+  return store;
+};
+
+// (async () => {
+//   const store = await getStore();
+//   console.log(store);
+// })();
+
+chrome.windows.onRemoved.addListener(async function (windowid) {
+  const store = await getStore();
+  store.dispatch(lockWallet());
+});
