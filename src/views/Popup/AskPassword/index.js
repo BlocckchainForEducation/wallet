@@ -4,8 +4,9 @@ import Container from "../shared/Container";
 import Header from "../shared/Header";
 
 import logo from "assets/imgs/logo.png";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Redirect } from "react-router-dom";
+import { unlockWallet } from "../redux";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -17,22 +18,24 @@ const useStyles = makeStyles((theme) => ({
   avatar: {
     width: theme.spacing(16),
     height: theme.spacing(16),
-    margin: theme.spacing(4, "auto"),
+    margin: theme.spacing(3, "auto"),
   },
   welcome: {
     fontWeight: "bold",
-    marginBottom: theme.spacing(8),
+    marginBottom: theme.spacing(6),
   },
 }));
 
 export default function AskPassword() {
   const cls = useStyles();
   const walletPassword = useSelector((state) => state.walletPassword);
+  const dp = useDispatch();
   const [state, setState] = useState({
     password: "",
     error: null,
   });
   const [redirect, setRedirect] = useState(null);
+
   return (
     <div>
       <Container>
@@ -64,6 +67,7 @@ export default function AskPassword() {
               if (state.password !== walletPassword) {
                 setState({ ...state, error: "Mật khẩu không đúng!" });
               } else {
+                dp(unlockWallet());
                 setRedirect(<Redirect to="/accounts"></Redirect>);
               }
             }}

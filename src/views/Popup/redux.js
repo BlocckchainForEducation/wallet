@@ -57,8 +57,11 @@ const popupSlice = createSlice({
     lockWallet: (state, action) => {
       state.shouldAskPassword = true;
     },
+    unlockWallet: (state) => {
+      state.shouldAskPassword = false;
+    },
   },
 });
 
 export default popupSlice.reducer;
-export const { setWalletPassword, createNewWallet, restoreWallet, createAccount, renameAccount, lockWallet } = popupSlice.actions;
+export const { setWalletPassword, createNewWallet, restoreWallet, createAccount, renameAccount, lockWallet, unlockWallet } = popupSlice.actions;
