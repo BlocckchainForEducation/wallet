@@ -26,11 +26,7 @@ export default function Accounts() {
     }
 
     const content = <AccountDetail {...acc} cb={closeDiaglog}></AccountDetail>;
-    const dialog = (
-      <Dialog open={true}>
-        <DialogContent>{content}</DialogContent>
-      </Dialog>
-    );
+    const dialog = <Dialog open={true}>{content}</Dialog>;
     setDialog(dialog);
   }
 

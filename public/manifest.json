@@ -3,11 +3,14 @@
   "name": "B4E Wallet",
   "version": "0.1",
   "description": "B4E Wallet for manage keys",
-  "permissions": [],
+  "permissions": [
+    "storage"
+  ],
   "background": {
     "scripts": [
       "static/js/background.js"
-    ]
+    ],
+    "persistent": false
   },
   "content_scripts": [
     {

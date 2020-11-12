@@ -7,7 +7,7 @@ const useStyles = makeStyles({
     height: "548px",
     // height: "600px",
     overflow: "auto",
-    border: "1px solid red",
+    // border: "1px solid red",
     margin: "auto",
     display: "grid",
     gridTemplateColumns: "1fr",
