@@ -1,12 +1,12 @@
-import React from "react";
+import React, { useState } from "react";
 import { Box, Button, makeStyles, Typography } from "@material-ui/core";
 import AddIcon from "@material-ui/icons/Add";
 import VerticalAlignBottomIcon from "@material-ui/icons/VerticalAlignBottom";
 import Container from "../shared/Container";
 import Header from "../shared/Header";
-import history from "../../../utils/router-history";
 import { setMnemonic } from "../redux";
 import { useDispatch } from "react-redux";
+import { Redirect } from "react-router-dom";
 
 const bip39 = require("bip39");
 
@@ -47,20 +47,28 @@ const useMainStyles = makeStyles((theme) => ({
 export default function CreateWallet() {
   const cls = useMainStyles();
   const dp = useDispatch();
+  const [redirect, setRedirect] = useState(null);
 
   function hdCreatWalletClick(e) {
     const mnemonic = bip39.generateMnemonic();
     dp(setMnemonic(mnemonic));
-    history.push("/mnemonic");
+    setRedirect(<Redirect to="/mnemonic"></Redirect>);
   }
   function hdRestoreWalletClick(e) {
-    history.push("/restore-wallet");
+    setRedirect(<Redirect to="/restore-wallet"></Redirect>);
   }
   return (
     <Container>
+      {redirect}
       <Header></Header>
       <div className={cls.flexbox}>
-        <OptionBox icon={<AddIcon color="action" style={{ fontSize: "4rem" }} />} title="Tạo mới ví" subtitle="Tạo ví bằng mã mnemonic mới" buttonContent="Tạo mới" hdClick={hdCreatWalletClick} />
+        <OptionBox
+          icon={<AddIcon color="action" style={{ fontSize: "4rem" }} />}
+          title="Tạo mới ví"
+          subtitle="Tạo ví bằng mã mnemonic mới"
+          buttonContent="Tạo mới"
+          hdClick={hdCreatWalletClick}
+        />
         <OptionBox
           icon={<VerticalAlignBottomIcon color="action" style={{ fontSize: "4rem" }} />}
           title="Khôi phục ví"

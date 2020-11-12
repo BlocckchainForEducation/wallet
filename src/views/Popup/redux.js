@@ -1,5 +1,4 @@
 import { createSlice } from "@reduxjs/toolkit";
-import history from "../../utils/router-history";
 
 const popupSlice = createSlice({
   name: "popup",

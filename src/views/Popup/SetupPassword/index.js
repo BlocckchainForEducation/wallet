@@ -12,7 +12,7 @@ import Header from "../shared/Header";
 
 import { setWalletPassword } from "../redux";
 import { useDispatch } from "react-redux";
-import history from "../../../utils/router-history";
+import { Redirect } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -41,12 +41,14 @@ export default function SetupPassword() {
     repassword: "",
     error: null,
   });
+  const [redirect, setRedirect] = useState(null);
 
   const dp = useDispatch();
 
   return (
     <div>
       <Container>
+        {redirect}
         <Header></Header>
         <Box p={2}>
           <Typography variant="h4" align="center" gutterBottom>
@@ -104,7 +106,8 @@ export default function SetupPassword() {
                     setState({ ...state, error: "Mật khẩu cần có ít nhất 8 ký tự!" });
                   } else {
                     dp(setWalletPassword(state.password));
-                    history.push("/create-wallet");
+                    // history.push("/create-wallet");
+                    setRedirect(<Redirect to="/create-wallet"></Redirect>);
                   }
                 }}
               >

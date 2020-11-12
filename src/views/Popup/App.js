@@ -1,6 +1,6 @@
 import React from "react";
 
-import { Router, Route, Switch } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import SetupPassword from "./SetupPassword";
 import CreateWallet from "./CreateWallet";
 import Mnemonic from "./Mnemonic";
@@ -9,7 +9,6 @@ import AccountDetail from "./AccountDetail";
 import AskPassword from "./AskPassword";
 import PromptRequest from "./PromptRequest";
 
-import history from "../../utils/router-history";
 import { getRedirect } from "../../utils/redirect-utils";
 import { Provider } from "react-redux";
 import store from "./store";
@@ -23,7 +22,7 @@ function App() {
     <Provider store={store}>
       <Box mt={5} bgcolor="white">
         <CssBaseline></CssBaseline>
-        <Router history={history}>
+        <Router>
           <Switch>
             <Route path="/setup-password" component={SetupPassword}></Route>
             <Route path="/create-wallet" component={CreateWallet}></Route>
