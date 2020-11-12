@@ -14,7 +14,7 @@ const useStyles = makeStyles((theme) => ({
       //   marginBottom: "0",
       // },
     },
-    width: "350px",
+    width: "320px",
     overflow: "auto",
   },
   avatar: {

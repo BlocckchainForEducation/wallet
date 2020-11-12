@@ -1,19 +1,33 @@
 import React from "react";
-import { Route, Switch } from "react-router-dom";
+import { Redirect, Route, Switch } from "react-router-dom";
 import SetupPassword from "./SetupPassword";
 import CreateWallet from "./CreateWallet";
 import Mnemonic from "./Mnemonic";
 import Accounts from "./Accounts";
 import AccountDetail from "./AccountDetail";
 import AskPassword from "./AskPassword";
-import PromptRequest from "./PromptRequest";
-import { GetRedirect } from "../../utils/redirect-utils";
-import "fontsource-roboto";
+import RequestSign from "./RequestSign";
 import { Box, CssBaseline } from "@material-ui/core";
+import { useSelector } from "react-redux";
+import "fontsource-roboto";
+
+function Redirector() {
+  const state = useSelector((state) => state);
+  if (state.walletPassword === "") {
+    return <Redirect from="/" to="/setup-password"></Redirect>;
+  } else if (state.mnemonic === "") {
+    return <Redirect from="/" to="/create-wallet"></Redirect>;
+  } else if (state.shouldAskPassword) {
+    return <Redirect from="/" to="/ask-password"></Redirect>;
+  } else if (state.isSignRequesting) {
+    return <Redirect from="/" to="/request-sign"></Redirect>;
+  } else {
+    return <Redirect from="/" to="/accounts"></Redirect>;
+  }
+}
 
 function App() {
   return (
-    // box mt-5 just for dev env
     <Box bgcolor="white">
       <CssBaseline></CssBaseline>
       <Switch>
@@ -23,8 +37,8 @@ function App() {
         <Route path="/accounts" component={Accounts}></Route>
         <Route path="/account-detail" component={AccountDetail}></Route>
         <Route path="/ask-password" component={AskPassword}></Route>
-        <Route path="/prompt-request" component={PromptRequest}></Route>
-        {GetRedirect()}
+        <Route path="/request-sign" component={RequestSign}></Route>
+        <Redirector></Redirector>
       </Switch>
     </Box>
   );

@@ -1,6 +1,6 @@
 import React from "react";
 import logo from "assets/imgs/logo.png";
-import { Avatar, IconButton, makeStyles, Typography } from "@material-ui/core";
+import { Avatar, Chip, IconButton, makeStyles, Typography } from "@material-ui/core";
 import AddIcon from "@material-ui/icons/Add";
 
 const useStyles = makeStyles((theme) => ({
@@ -8,11 +8,19 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(2),
     backgroundColor: "#f1f2f6",
     position: "relative",
+    textAlign: "center",
   },
   logo: {
     position: "absolute",
     top: "50%",
     transform: "translateY(-50%)",
+  },
+  chip: { padding: theme.spacing(1) },
+  title: {
+    // display: "inline-block",
+    // padding: "8px",
+    // outline: "1px solid grey",
+    // outlineOffset: "5px",
   },
   icon: {
     position: "absolute",
@@ -26,9 +34,9 @@ export default function Header({ icon, hdClick }) {
   const cls = useStyles();
   return (
     <div className={cls.root}>
-      {/* <img alt="Logo" className={cls.logo} /> */}
       <Avatar src={logo} className={cls.logo}></Avatar>
-      <Typography variant="h5" align="center">
+      {/* <Chip className={cls.chip} variant="outlined" label={<Typography variant="h5">B4E Wallet</Typography>}></Chip> */}
+      <Typography className={cls.title} variant="h5">
         B4E Wallet
       </Typography>
       {icon ? (

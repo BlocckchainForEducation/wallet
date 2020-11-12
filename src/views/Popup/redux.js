@@ -17,12 +17,14 @@ const popupSlice = createSlice({
   initialState: {
     walletPassword: "",
     mnemonic: "",
-    accounts: [],
-    shouldAskPassword: false,
     hdkey: null,
+    accounts: [],
     //create default wallet, just for dev:
     // TODO: remove this in production code
     // hdkey: HdKey.fromMasterSeed(bip39.mnemonicToSeedSync(bip39.generateMnemonic())).toJSON(),
+    shouldAskPassword: false,
+    isSignRequesting: false,
+    accountToSign: null,
   },
   reducers: {
     setWalletPassword: (state, action) => {
@@ -60,8 +62,15 @@ const popupSlice = createSlice({
     unlockWallet: (state) => {
       state.shouldAskPassword = false;
     },
+    requestSign: (state) => {
+      state.isSignRequesting = true;
+    },
+    setAccountToSign: (state, action) => {
+      state.accountToSign = state.accounts.find((acc) => acc.id === action.payload.id);
+      state.isSignRequesting = false;
+    },
   },
 });
 
 export default popupSlice.reducer;
-export const { setWalletPassword, createNewWallet, restoreWallet, createAccount, renameAccount, lockWallet, unlockWallet } = popupSlice.actions;
+export const { setWalletPassword, createNewWallet, restoreWallet, createAccount, renameAccount, lockWallet, unlockWallet, requestSign, setAccountToSign } = popupSlice.actions;

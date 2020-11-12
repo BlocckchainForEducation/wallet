@@ -39,7 +39,7 @@ const useMainStyles = makeStyles((theme) => ({
     alignItems: "center",
 
     "& > *": {
-      width: "78%",
+      width: "80%",
     },
   },
 }));
