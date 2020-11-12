@@ -15,7 +15,7 @@ const useStyles = makeStyles((theme) => ({
       // },
     },
     width: "350px",
-    // height: "500px",
+    overflow: "auto",
   },
   avatar: {
     width: theme.spacing(12),
@@ -51,7 +51,7 @@ export default function AccountDetail(props) {
         value={state.accountName}
         onChange={(e) => setState({ ...state, accountName: e.target.value })}
       ></TextField>
-      <TextField variant="outlined" label="Khóa công khai" multiline rows={4} fullWidth InputLabelProps={{ shrink: true }} value={publicKey}></TextField>
+      <TextField variant="outlined" label="Khóa công khai" multiline rows={3} fullWidth InputLabelProps={{ shrink: true }} value={publicKey}></TextField>
       <TextField
         variant="outlined"
         label="Khóa bí mật"

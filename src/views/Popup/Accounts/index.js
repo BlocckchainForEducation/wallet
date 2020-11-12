@@ -1,4 +1,4 @@
-import { Avatar, Box, Dialog, DialogContent, Divider, IconButton, List, ListItem, ListItemAvatar, ListItemSecondaryAction, ListItemText } from "@material-ui/core";
+import { Avatar, Box, Dialog, DialogContent, Divider, IconButton, List, ListItem, ListItemAvatar, ListItemSecondaryAction, ListItemText, makeStyles } from "@material-ui/core";
 import { Add } from "@material-ui/icons";
 import SettingsIcon from "@material-ui/icons/Settings";
 import React, { useState } from "react";
@@ -9,7 +9,13 @@ import { createAccount } from "../redux";
 import Container from "../shared/Container";
 import Header from "../shared/Header";
 
+const useStyles = makeStyles({
+  paper: {
+    margin: "0",
+  },
+});
 export default function Accounts() {
+  const cls = useStyles();
   const accounts = useSelector((state) => state.accounts);
   const [dialog, setDialog] = useState(null);
 
@@ -26,7 +32,11 @@ export default function Accounts() {
     }
 
     const content = <AccountDetail {...acc} cb={closeDiaglog}></AccountDetail>;
-    const dialog = <Dialog open={true}>{content}</Dialog>;
+    const dialog = (
+      <Dialog classes={{ paper: cls.paper }} open={true}>
+        {content}
+      </Dialog>
+    );
     setDialog(dialog);
   }
 
