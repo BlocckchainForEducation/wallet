@@ -8,6 +8,8 @@ function GetRedirect() {
     return <Redirect from="/" to="/setup-password"></Redirect>;
   } else if (state.mnemonic === "") {
     return <Redirect from="/" to="/create-wallet"></Redirect>;
+  } else if (state.shouldAskPassword) {
+    return <Redirect from="/" to="/ask-password"></Redirect>;
   } else {
     return <Redirect from="/" to="/accounts"></Redirect>;
   }

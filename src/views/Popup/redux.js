@@ -18,10 +18,11 @@ const popupSlice = createSlice({
     walletPassword: "",
     mnemonic: "",
     accounts: [],
-    // hdkey: null,
+    shouldAskPassword: false,
+    hdkey: null,
     //create default wallet, just for dev:
     // TODO: remove this in production code
-    hdkey: HdKey.fromMasterSeed(bip39.mnemonicToSeedSync(bip39.generateMnemonic())).toJSON(),
+    // hdkey: HdKey.fromMasterSeed(bip39.mnemonicToSeedSync(bip39.generateMnemonic())).toJSON(),
   },
   reducers: {
     setWalletPassword: (state, action) => {
