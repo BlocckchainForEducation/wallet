@@ -12,12 +12,13 @@ const getStore = async () => {
   return store;
 };
 
-window.addEventListener("message", hdSignRequest, false);
-
 async function hdSignRequest(e) {
   const store = await getStore();
   if (e.source != window) return;
   if (e.data.type && e.data.type == "SIGN_REQUEST") {
+    console.log("content.js: receive msg");
     store.dispatch(requestSign());
   }
 }
+
+window.addEventListener("message", hdSignRequest, false);

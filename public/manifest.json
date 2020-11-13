@@ -6,7 +6,7 @@
   "permissions": [
     "storage",
     "tabs",
-    "http://localhost:3000/*"
+    "http://localhost/*"
   ],
   "background": {
     "scripts": [
@@ -20,7 +20,7 @@
         "static/js/content.js"
       ],
       "matches": [
-        "http://localhost:3000/*",
+        "http://localhost/*",
         "https://*.example.com/*"
       ]
     }

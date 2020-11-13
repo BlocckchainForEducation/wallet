@@ -1,7 +1,6 @@
 import React from "react";
 import logo from "assets/imgs/logo.png";
-import { Avatar, Chip, IconButton, makeStyles, Typography } from "@material-ui/core";
-import AddIcon from "@material-ui/icons/Add";
+import { Avatar, IconButton, makeStyles, Typography } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
   root: {

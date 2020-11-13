@@ -1,4 +1,4 @@
-import { Avatar, Box, Dialog, DialogContent, Divider, IconButton, List, ListItem, ListItemAvatar, ListItemSecondaryAction, ListItemText, makeStyles } from "@material-ui/core";
+import { Avatar, Box, Dialog, Divider, IconButton, List, ListItem, ListItemAvatar, ListItemSecondaryAction, ListItemText, makeStyles } from "@material-ui/core";
 import { Add } from "@material-ui/icons";
 import SettingsIcon from "@material-ui/icons/Settings";
 import React, { useState } from "react";

@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { Avatar, Box, Button, IconButton, InputAdornment, makeStyles, TextField } from "@material-ui/core";
-import Container from "../shared/Container";
 import { VisibilityOff, Visibility } from "@material-ui/icons";
 import { renameAccount } from "../redux";
 import { useDispatch } from "react-redux";
