@@ -10,6 +10,7 @@ import RequestSign from "./RequestSign";
 import { Box, CssBaseline } from "@material-ui/core";
 import { useSelector } from "react-redux";
 import "fontsource-roboto";
+import { SnackbarProvider } from "notistack";
 
 function Redirector() {
   const state = useSelector((state) => state);
@@ -28,19 +29,21 @@ function Redirector() {
 
 function App() {
   return (
-    <Box bgcolor="white">
-      <CssBaseline></CssBaseline>
-      <Switch>
-        <Route path="/setup-password" component={SetupPassword}></Route>
-        <Route path="/create-wallet" component={CreateWallet}></Route>
-        <Route path="/mnemonic" component={Mnemonic}></Route>
-        <Route path="/accounts" component={Accounts}></Route>
-        <Route path="/account-detail" component={AccountDetail}></Route>
-        <Route path="/ask-password" component={AskPassword}></Route>
-        <Route path="/request-sign" component={RequestSign}></Route>
-        <Redirector></Redirector>
-      </Switch>
-    </Box>
+    <SnackbarProvider maxSnack={1}>
+      <Box bgcolor="white">
+        <CssBaseline></CssBaseline>
+        <Switch>
+          <Route path="/setup-password" component={SetupPassword}></Route>
+          <Route path="/create-wallet" component={CreateWallet}></Route>
+          <Route path="/mnemonic" component={Mnemonic}></Route>
+          <Route path="/accounts" component={Accounts}></Route>
+          <Route path="/account-detail" component={AccountDetail}></Route>
+          <Route path="/ask-password" component={AskPassword}></Route>
+          <Route path="/request-sign" component={RequestSign}></Route>
+          <Redirector></Redirector>
+        </Switch>
+      </Box>
+    </SnackbarProvider>
   );
 }
 

@@ -69,8 +69,23 @@ const popupSlice = createSlice({
       state.accountToSign = state.accounts.find((acc) => acc.id === action.payload.id);
       state.isSignRequesting = false;
     },
+    refuseSign: (state, action) => {
+      state.accountToSign = null;
+      state.isSignRequesting = false;
+    },
   },
 });
 
 export default popupSlice.reducer;
-export const { setWalletPassword, createNewWallet, restoreWallet, createAccount, renameAccount, lockWallet, unlockWallet, requestSign, setAccountToSign } = popupSlice.actions;
+export const {
+  setWalletPassword,
+  createNewWallet,
+  restoreWallet,
+  createAccount,
+  renameAccount,
+  lockWallet,
+  unlockWallet,
+  requestSign,
+  setAccountToSign,
+  refuseSign,
+} = popupSlice.actions;

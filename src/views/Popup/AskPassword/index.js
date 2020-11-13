@@ -68,7 +68,7 @@ export default function AskPassword() {
                 setState({ ...state, error: "Mật khẩu không đúng!" });
               } else {
                 dp(unlockWallet());
-                setRedirect(<Redirect to="/accounts"></Redirect>);
+                setRedirect(<Redirect to="/"></Redirect>);
               }
             }}
           >

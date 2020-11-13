@@ -24,13 +24,12 @@ export default function Accounts() {
   function hdAddAccount(e) {
     dp(createAccount());
   }
+
   function hdSettingClick(e, id) {
     const acc = accounts.find((acc) => acc.id === id);
-
     function closeDiaglog() {
       setDialog(null);
     }
-
     const content = <AccountDetail {...acc} cb={closeDiaglog}></AccountDetail>;
     const dialog = (
       <Dialog classes={{ paper: cls.paper }} open={true}>
