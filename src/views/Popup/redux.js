@@ -22,6 +22,7 @@ const popupSlice = createSlice({
     //create default wallet, just for dev:
     // TODO: remove this in production code
     // hdkey: HdKey.fromMasterSeed(bip39.mnemonicToSeedSync(bip39.generateMnemonic())).toJSON(),
+    // accounts: [HdKey.fromMasterSeed(bip39.mnemonicToSeedSync(bip39.generateMnemonic())).derive("m/44'/0'/0'/0/0")],
     shouldAskPassword: false,
     isSignRequesting: false,
     accountToSign: null,
