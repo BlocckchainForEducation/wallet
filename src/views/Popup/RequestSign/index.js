@@ -28,7 +28,7 @@ import CheckCircleIcon from "@material-ui/icons/CheckCircle";
 import BlockIcon from "@material-ui/icons/Block";
 
 const useStyles = makeStyles((theme) => ({
-  title: { margin: theme.spacing(1, 0) },
+  title: { marginTop: theme.spacing(1) },
   paper: {
     margin: "0",
   },
