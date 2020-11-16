@@ -8,22 +8,20 @@ import AccountDetail from "../AccountDetail";
 import { createAccount } from "../redux";
 import Container from "../shared/Container";
 import Header from "../shared/Header";
+import CustomHeader from "./CustomHeader";
 
 const useStyles = makeStyles({
   paper: {
     margin: "0",
   },
 });
+
 export default function Accounts() {
   const cls = useStyles();
   const accounts = useSelector((state) => state.accounts);
   const [dialog, setDialog] = useState(null);
 
   const dp = useDispatch();
-
-  function hdAddAccount(e) {
-    dp(createAccount());
-  }
 
   function hdSettingClick(e, id) {
     const acc = accounts.find((acc) => acc.id === id);
@@ -42,7 +40,8 @@ export default function Accounts() {
   return (
     <div>
       <Container>
-        <Header icon={<Add fontSize="large" />} hdClick={hdAddAccount}></Header>
+        {/* <Header icon={<Add fontSize="large" />} hdClick={hdAddAccount}></Header> */}
+        <CustomHeader></CustomHeader>
         <Box>
           <List>
             {accounts.map((acc, index) => (
