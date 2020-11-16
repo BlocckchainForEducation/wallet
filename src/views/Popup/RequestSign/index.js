@@ -48,7 +48,7 @@ export default function RequestSign() {
         <Box width={"300px"} px={2} pt={2} pb={1} display="flex" flexDirection="column" alignItems="center">
           {isAccept ? (
             <>
-              <CheckCircleOutlineIcon style={{ fontSize: "150px", color: "green" }}></CheckCircleOutlineIcon>
+              <CheckCircleOutlineIcon style={{ fontSize: "150px", color: "#28a745" }}></CheckCircleOutlineIcon>
               <Typography variant="h4">Đã kí thành công!</Typography>
             </>
           ) : (
