@@ -29,17 +29,17 @@ const useStyles = makeStyles((theme) => ({
 export default function AskPassword() {
   const cls = useStyles();
   const walletPassword = useSelector((state) => state.walletPassword);
+  const shouldAskPassword = useSelector((state) => state.shouldAskPassword);
   const dp = useDispatch();
   const [state, setState] = useState({
     password: "",
     error: null,
   });
-  const [redirect, setRedirect] = useState(null);
 
   return (
     <div>
       <Container>
-        {redirect}
+        {shouldAskPassword ? null : <Redirect to="/"></Redirect>}
         <Header></Header>
         <Box className={cls.root} px={3}>
           <Avatar className={cls.avatar} src={logo}></Avatar>
@@ -67,7 +67,6 @@ export default function AskPassword() {
               if (state.password !== walletPassword) {
                 setState({ ...state, error: "Mật khẩu không đúng!" });
               } else {
-                setRedirect(<Redirect to="/"></Redirect>);
                 dp(unlockWallet());
               }
             }}

@@ -117,7 +117,7 @@ export default function RequestSign() {
               </React.Fragment>
             ))}
           </List>
-          <Box my={1}>
+          <Box my={2} px={2}>
             <Button variant="contained" fullWidth color="primary" onClick={hdRefuseSign}>
               Cancel
             </Button>
