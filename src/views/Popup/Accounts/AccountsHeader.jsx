@@ -1,25 +1,6 @@
 import React, { useState } from "react";
-import {
-  Avatar,
-  Box,
-  Button,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogContentText,
-  DialogTitle,
-  IconButton,
-  ListItemAvatar,
-  ListItemIcon,
-  makeStyles,
-  Menu,
-  MenuItem,
-  MenuList,
-  Paper,
-  TextField,
-  Typography,
-} from "@material-ui/core";
-import { Add, SettingsVoice } from "@material-ui/icons";
+import { Button, Dialog, DialogActions, DialogContent, DialogTitle, IconButton, ListItemIcon, makeStyles, Menu, MenuItem, Paper, TextField, Typography } from "@material-ui/core";
+import { Add } from "@material-ui/icons";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import { createAccount, lockWallet, importAccount } from "../redux";
 import { useDispatch } from "react-redux";
@@ -87,41 +68,41 @@ export default function CustomHeader() {
     openDialog: false,
   });
 
-  function hdLockWallet(e) {
+  function hdLockWallet() {
     dp(lockWallet());
     window.close();
   }
 
   function hdShowMenu(e) {
-    setState({ anchorEl: e.currentTarget });
+    setState({ ...state, anchorEl: e.currentTarget });
   }
 
-  function hdAddAccount(e) {
-    dp(createAccount());
-    setState({});
-  }
-
-  function hdCloseMenu(e) {
+  function hdCloseMenu() {
     setState({ ...state, anchorEl: null });
   }
 
-  function hdShowMnemonic(e) {
-    setState({ redirect: <Redirect to="/mnemonic"></Redirect> });
+  function hdAddAccount() {
+    dp(createAccount());
+    setState({ ...state, anchorEl: null });
   }
 
-  function hdImportAccount(e) {
-    setState({ openDialog: true });
+  function hdShowMnemonic() {
+    setState({ ...state, redirect: <Redirect to="/mnemonic"></Redirect> });
+  }
+
+  function hdImportAccount() {
+    setState({ ...state, openDialog: true });
   }
 
   function hdCloseDialog(e) {
     e.stopPropagation();
-    setState({});
+    setState({ anchorEl: null, openDialog: false });
   }
 
   function hdOk(privateKey) {
     // TODO: validate private key
     dp(importAccount(privateKey));
-    setState({});
+    setState({ anchorEl: null, openDialog: false });
   }
 
   return (
@@ -145,7 +126,6 @@ export default function CustomHeader() {
           TransitionComponent={Fade}
           anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
           transformOrigin={{ vertical: "top", horizontal: "right" }}
-          // getContentAnchorEl={null}
         >
           <MenuItem onClick={hdAddAccount}>
             <ListItemIcon classes={{ root: cls.overideMinWidth }}>
@@ -158,7 +138,6 @@ export default function CustomHeader() {
               <VerticalAlignBottomIcon></VerticalAlignBottomIcon>
             </ListItemIcon>
             <Typography variant="inherit">Import tài khoản</Typography>
-            <AskPrivateKeyDialog openDialog={state.openDialog} hdCloseDialog={hdCloseDialog} hdCancel={hdCloseDialog} hdOk={hdOk}></AskPrivateKeyDialog>
           </MenuItem>
           <MenuItem onClick={hdShowMnemonic}>
             <ListItemIcon classes={{ root: cls.overideMinWidth }}>
@@ -168,6 +147,7 @@ export default function CustomHeader() {
           </MenuItem>
         </Menu>
       </Paper>
+      <AskPrivateKeyDialog openDialog={state.openDialog} hdCloseDialog={hdCloseDialog} hdCancel={hdCloseDialog} hdOk={hdOk}></AskPrivateKeyDialog>
     </div>
   );
 }

@@ -8,7 +8,7 @@ import AccountDetail from "../AccountDetail";
 import { createAccount } from "../redux";
 import Container from "../shared/Container";
 import Header from "../shared/Header";
-import CustomHeader from "./CustomHeader";
+import CustomHeader from "./AccountsHeader";
 
 const useStyles = makeStyles({
   paper: {
