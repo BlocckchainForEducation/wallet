@@ -19,6 +19,7 @@ const popupSlice = createSlice({
     mnemonic: "",
     hdkey: null,
     accounts: [],
+    importedAccounts: [],
     //create default wallet, just for dev:
     // TODO: remove this in production code
     // hdkey: HdKey.fromMasterSeed(bip39.mnemonicToSeedSync(bip39.generateMnemonic())).toJSON(),
@@ -49,6 +50,16 @@ const popupSlice = createSlice({
         name: "Tài khoản " + index,
         publicKey: newAccNode.publicKey.toString("base64"),
         privateKey: newAccNode.privateKey.toString("base64"),
+        avatarSeed: Math.round(Math.random() * 10000000),
+      };
+      state.accounts.push(newAcc);
+    },
+    importAccount: (state, action) => {
+      const index = state.accounts.length;
+      const newAcc = {
+        id: uid(),
+        name: "Tài khoản (Imported) " + index,
+        privateKey: action.payload,
         avatarSeed: Math.round(Math.random() * 10000000),
       };
       state.accounts.push(newAcc);
@@ -89,4 +100,5 @@ export const {
   requestSign,
   setAccountToSign,
   refuseSign,
+  importAccount,
 } = popupSlice.actions;
