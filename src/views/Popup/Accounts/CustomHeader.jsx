@@ -1,9 +1,12 @@
-import React from "react";
-import { IconButton, makeStyles, Typography } from "@material-ui/core";
+import React, { useState } from "react";
+import { Avatar, IconButton, ListItemAvatar, ListItemIcon, makeStyles, Menu, MenuItem, MenuList, Paper, Typography } from "@material-ui/core";
 import { Add } from "@material-ui/icons";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import { createAccount, lockWallet } from "../redux";
 import { useDispatch } from "react-redux";
+import MoreVertIcon from "@material-ui/icons/MoreVert";
+import VerticalAlignBottomIcon from "@material-ui/icons/VerticalAlignBottom";
+import Fade from "@material-ui/core/Fade";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -11,6 +14,9 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: "#f1f2f6",
     position: "relative",
     textAlign: "center",
+    "& MuiListItemIcon": {
+      minWidth: "40px",
+    },
   },
   leftBtn: {
     position: "absolute",
@@ -29,6 +35,7 @@ const useStyles = makeStyles((theme) => ({
 export default function CustomHeader() {
   const cls = useStyles();
   const dp = useDispatch();
+  const [anchorEl, setAnchorEl] = useState(null);
 
   function hdLockWallet(e) {
     dp(lockWallet());
@@ -37,6 +44,15 @@ export default function CustomHeader() {
 
   function hdAddAccount(e) {
     dp(createAccount());
+    setAnchorEl(null);
+  }
+
+  function hdClickMore(e) {
+    setAnchorEl(e.currentTarget);
+  }
+
+  function hdClose(e) {
+    setAnchorEl(null);
   }
 
   return (
@@ -47,9 +63,39 @@ export default function CustomHeader() {
       <Typography className={cls.title} variant="h5">
         B4E Wallet
       </Typography>
-      <IconButton onClick={hdAddAccount} className={cls.rightBtn}>
-        <Add fontSize="large" />
+      <IconButton onClick={hdClickMore} className={cls.rightBtn}>
+        <MoreVertIcon fontSize="large"></MoreVertIcon>
       </IconButton>
+      <Paper>
+        <Menu
+          open={Boolean(anchorEl)}
+          anchorEl={anchorEl}
+          keepMounted
+          onClose={hdClose}
+          TransitionComponent={Fade}
+          anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+          transformOrigin={{ vertical: "top", horizontal: "right" }}
+        >
+          <MenuItem onClick={hdAddAccount}>
+            <ListItemIcon>
+              <Add />
+            </ListItemIcon>
+            <Typography variant="inherit">Tạo thêm tài khoản</Typography>
+          </MenuItem>
+          <MenuItem>
+            <ListItemIcon>
+              <VerticalAlignBottomIcon></VerticalAlignBottomIcon>
+            </ListItemIcon>
+            <Typography variant="inherit">Import tài khoản</Typography>
+          </MenuItem>
+          <MenuItem>
+            <ListItemIcon>
+              <Add />
+            </ListItemIcon>
+            <Typography variant="inherit">Xem mã Mnemonic</Typography>
+          </MenuItem>
+        </Menu>
+      </Paper>
     </div>
   );
 }
