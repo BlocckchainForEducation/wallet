@@ -8,6 +8,7 @@
     "@material-ui/lab": "^4.0.0-alpha.56",
     "@reduxjs/toolkit": "^1.4.0",
     "bip39": "^3.0.2",
+    "ethereumjs-util": "^7.0.7",
     "fontsource-roboto": "^3.0.3",
     "hdkey": "^2.0.1",
     "notistack": "^1.0.1",

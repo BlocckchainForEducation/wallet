@@ -3,6 +3,7 @@ import { uid } from "uid";
 
 const bip39 = require("bip39");
 const HdKey = require("hdkey");
+var utils = require("ethereumjs-util");
 
 // const accountSchema = {
 //   id: "",
@@ -45,21 +46,26 @@ const popupSlice = createSlice({
       const path = "m/44'/0'/0'/0/" + index;
       const hdkeyObj = HdKey.fromJSON(state.hdkey);
       const newAccNode = hdkeyObj.derive(path);
+      const privateKeyBuf = newAccNode.privateKey;
       const newAcc = {
         id: uid(),
         name: "Tài khoản " + index,
-        publicKey: newAccNode.publicKey.toString("base64"),
-        privateKey: newAccNode.privateKey.toString("base64"),
+        publicKey: utils.privateToPublic(privateKeyBuf).toString("hex"),
+        privateKey: privateKeyBuf.toString("hex"),
         avatarSeed: Math.round(Math.random() * 10000000),
       };
       state.accounts.push(newAcc);
     },
     importAccount: (state, action) => {
+      const privateKeyHex = action.payload;
+      const privateKeyBuf = Buffer.from(privateKeyHex, "hex");
+      const publicKey = utils.privateToPublic(privateKeyBuf).toString("hex");
       const index = state.accounts.length;
       const newAcc = {
         id: uid(),
         name: "Tài khoản (Imported) " + index,
-        privateKey: action.payload,
+        publicKey: publicKey,
+        privateKey: privateKeyHex,
         avatarSeed: Math.round(Math.random() * 10000000),
       };
       state.accounts.push(newAcc);

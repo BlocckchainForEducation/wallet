@@ -49,12 +49,12 @@ export default function RequestSign() {
           {isAccept ? (
             <>
               <CheckCircleOutlineIcon style={{ fontSize: "150px", color: "#28a745" }}></CheckCircleOutlineIcon>
-              <Typography variant="h4">Đã kí thành công!</Typography>
+              <Typography variant="h4">OK!</Typography>
             </>
           ) : (
             <>
               <BlockIcon color="secondary" style={{ fontSize: "150px" }}></BlockIcon>
-              <Typography variant="h4">Đã từ chối kí!</Typography>
+              <Typography variant="h4">Đã từ chối!</Typography>
             </>
           )}
         </Box>
@@ -65,7 +65,7 @@ export default function RequestSign() {
               window.close();
             }}
           >
-            OK
+            Close
           </Button>
         </DialogActions>
       </Dialog>
@@ -93,7 +93,7 @@ export default function RequestSign() {
         <Header></Header>
         <Box>
           <Typography className={cls.title} variant="h5" align="center">
-            Chọn tài khoản để kí:
+            Chọn tài khoản:
           </Typography>
           <List>
             {accounts.map((acc, index) => (
