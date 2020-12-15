@@ -1,0 +1,41 @@
+{
+  "manifest_version": 2,
+  "name": "B4E Wallet",
+  "version": "0.1",
+  "description": "B4E Wallet for manage keys",
+  "permissions": [
+    "storage",
+    "tabs",
+    "http://localhost/*"
+  ],
+  "background": {
+    "scripts": [
+      "static/js/background.js"
+    ],
+    "persistent": false
+  },
+  "content_scripts": [
+    {
+      "js": [
+        "static/js/content.js"
+      ],
+      "matches": [
+        "http://localhost/*",
+        "https://*.example.com/*"
+      ]
+    }
+  ],
+  "icons": {
+    "192": "logo192.png"
+  },
+  "browser_action": {
+    "default_icon": {
+      "192": "logo192.png"
+    },
+    "default_title": "B4E Wallet",
+    "default_popup": "popup.html"
+  },
+  "options_ui": {
+    "page": "options.html"
+  }
+}

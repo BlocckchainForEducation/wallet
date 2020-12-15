@@ -18,8 +18,8 @@ let checkpointRequestingState;
 window.addEventListener("message", hdSignRequest, false);
 async function hdSignRequest(e) {
   const store = await getStore();
-  if (e.source != window) return;
-  if (e.data.type && e.data.type == "SIGN_REQUEST") {
+  if (e.source !== window) return;
+  if (e.data.type && e.data.type === "SIGN_REQUEST") {
     checkpointRequestingState = true;
     store.dispatch(requestSign());
   }

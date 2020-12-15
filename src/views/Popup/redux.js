@@ -3,15 +3,7 @@ import { uid } from "uid";
 
 const bip39 = require("bip39");
 const HdKey = require("hdkey");
-var utils = require("ethereumjs-util");
-
-// const accountSchema = {
-//   id: "",
-//   name: "",
-//   publicKey: "",
-//   privateKey: "",
-//   avatarSeed: "",
-// };
+const secp256k1 = require("secp256k1");
 
 const popupSlice = createSlice({
   name: "popup",
@@ -21,10 +13,6 @@ const popupSlice = createSlice({
     hdkey: null,
     accounts: [],
     importedAccounts: [],
-    //create default wallet, just for dev:
-    // TODO: remove this in production code
-    // hdkey: HdKey.fromMasterSeed(bip39.mnemonicToSeedSync(bip39.generateMnemonic())).toJSON(),
-    // accounts: [HdKey.fromMasterSeed(bip39.mnemonicToSeedSync(bip39.generateMnemonic())).derive("m/44'/0'/0'/0/0")],
     shouldAskPassword: false,
     isSignRequesting: false,
     accountToSign: null,
@@ -46,12 +34,11 @@ const popupSlice = createSlice({
       const path = "m/44'/0'/0'/0/" + index;
       const hdkeyObj = HdKey.fromJSON(state.hdkey);
       const newAccNode = hdkeyObj.derive(path);
-      const privateKeyBuf = newAccNode.privateKey;
       const newAcc = {
         id: uid(),
         name: "Tài khoản " + index,
-        publicKey: utils.privateToPublic(privateKeyBuf).toString("hex"),
-        privateKey: privateKeyBuf.toString("hex"),
+        publicKey: newAccNode.publicKey.toString("hex"),
+        privateKey: newAccNode.privateKey.toString("hex"),
         avatarSeed: Math.round(Math.random() * 10000000),
       };
       state.accounts.push(newAcc);
@@ -59,7 +46,7 @@ const popupSlice = createSlice({
     importAccount: (state, action) => {
       const privateKeyHex = action.payload;
       const privateKeyBuf = Buffer.from(privateKeyHex, "hex");
-      const publicKey = utils.privateToPublic(privateKeyBuf).toString("hex");
+      const publicKey = Buffer.from(secp256k1.publicKeyCreate(privateKeyBuf, true)).toString("hex");
       const index = state.accounts.length;
       const newAcc = {
         id: uid(),
