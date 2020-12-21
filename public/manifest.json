@@ -6,7 +6,8 @@
   "permissions": [
     "storage",
     "tabs",
-    "http://localhost/*"
+    "http://*/*",
+    "http://139.59.125.235/*"
   ],
   "background": {
     "scripts": [
@@ -20,8 +21,8 @@
         "static/js/content.js"
       ],
       "matches": [
-        "http://localhost/*",
-        "https://*.example.com/*"
+        "http://*/*",
+        "http://139.59.125.235/*"
       ]
     }
   ],
