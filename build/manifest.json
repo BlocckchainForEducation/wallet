@@ -5,8 +5,7 @@
   "description": "B4E Wallet for manage keys",
   "permissions": [
     "storage",
-    "tabs",
-    "http://139.59.125.235/*"
+    "tabs"
   ],
   "background": {
     "scripts": [
@@ -21,7 +20,7 @@
       ],
       "matches": [
         "http://*/*",
-        "http://139.59.125.235/*"
+        "https://*/*"
       ]
     }
   ],
