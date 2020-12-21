@@ -13,8 +13,11 @@ const useStyles = makeStyles((theme) => ({
     position: "absolute",
     top: "50%",
     transform: "translateY(-50%)",
+    width: "48px",
+    height: "48px",
+    objectFit: "contain",
+    left: theme.spacing(2),
   },
-  chip: { padding: theme.spacing(1) },
   title: {
     // display: "inline-block",
     // padding: "8px",
@@ -33,8 +36,8 @@ export default function Header({ icon, hdClick }) {
   const cls = useStyles();
   return (
     <div className={cls.root}>
-      <Avatar src={logo} className={cls.logo}></Avatar>
-      {/* <Chip className={cls.chip} variant="outlined" label={<Typography variant="h5">B4E Wallet</Typography>}></Chip> */}
+      {/* <Avatar src={logo} className={cls.logo}></Avatar> */}
+      <img src={logo} className={cls.logo} alt="logo"></img>
       <Typography className={cls.title} variant="h5">
         B4E Wallet
       </Typography>

@@ -42,7 +42,8 @@ export default function AskPassword() {
         {shouldAskPassword ? null : <Redirect to="/"></Redirect>}
         <Header></Header>
         <Box className={cls.root} px={3}>
-          <Avatar className={cls.avatar} src={logo}></Avatar>
+          {/* <Avatar className={cls.avatar} src={logo}></Avatar> */}
+          <img scr={logo} alt="logo" className={cls.avatar}></img>
           <Typography className={cls.welcome} variant="h4" align="center">
             Chào mừng bạn trở lại!
           </Typography>
