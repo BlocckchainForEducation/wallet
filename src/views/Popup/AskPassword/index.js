@@ -18,6 +18,7 @@ const useStyles = makeStyles((theme) => ({
   avatar: {
     width: theme.spacing(16),
     height: theme.spacing(16),
+    display: "block",
     margin: theme.spacing(3, "auto"),
   },
   welcome: {
@@ -43,7 +44,7 @@ export default function AskPassword() {
         <Header></Header>
         <Box className={cls.root} px={3}>
           {/* <Avatar className={cls.avatar} src={logo}></Avatar> */}
-          <img scr={logo} alt="logo" className={cls.avatar}></img>
+          <img src={logo} alt="logo" className={cls.avatar}></img>
           <Typography className={cls.welcome} variant="h4" align="center">
             Chào mừng bạn trở lại!
           </Typography>
