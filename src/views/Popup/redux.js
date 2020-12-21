@@ -16,6 +16,7 @@ const popupSlice = createSlice({
     shouldAskPassword: false,
     isSignRequesting: false,
     accountToSign: null,
+    origin: null,
   },
   reducers: {
     setWalletPassword: (state, action) => {
@@ -67,8 +68,9 @@ const popupSlice = createSlice({
     unlockWallet: (state) => {
       state.shouldAskPassword = false;
     },
-    requestSign: (state) => {
+    requestSign: (state, action) => {
       state.isSignRequesting = true;
+      state.origin = action.payload;
     },
     setAccountToSign: (state, action) => {
       state.accountToSign = state.accounts.find((acc) => acc.id === action.payload.id);
@@ -77,6 +79,7 @@ const popupSlice = createSlice({
     refuseSign: (state, action) => {
       state.accountToSign = null;
       state.isSignRequesting = false;
+      state.origin = null;
     },
   },
 });

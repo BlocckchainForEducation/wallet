@@ -2,7 +2,7 @@ import storeCreatorFactory from "reduxed-chrome-storage";
 import { createStore } from "redux";
 import reducer, { requestSign } from "./views/Popup/redux";
 
-console.log("Hello Content");
+console.log("B4E Wallet is working...");
 
 // init store
 const storeCreator = storeCreatorFactory({ createStore });
@@ -21,7 +21,7 @@ async function hdSignRequest(e) {
   if (e.source !== window) return;
   if (e.data.type && e.data.type === "SIGN_REQUEST") {
     checkpointRequestingState = true;
-    store.dispatch(requestSign());
+    store.dispatch(requestSign(e.origin));
   }
 }
 
@@ -29,10 +29,11 @@ async function hdSignRequest(e) {
 async function handleRequestResponse() {
   const store = await getStore();
   let nowRequestingState = store.getState().isSignRequesting;
+  const origin = store.getState().origin;
   // accepted or refused
   if (checkpointRequestingState !== nowRequestingState) {
     let accountToSign = store.getState().accountToSign;
-    window.postMessage({ type: "SIGN_RESPONSE", accept: Boolean(accountToSign), account: accountToSign }, "*");
+    window.postMessage({ type: "SIGN_RESPONSE", accept: Boolean(accountToSign), account: accountToSign }, origin);
   }
   checkpointRequestingState = nowRequestingState;
 }
