@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
   "name": "B4E Wallet",
-  "version": "0.1",
+  "version": "1.1",
   "description": "B4E Wallet for manage keys",
   "permissions": [
     "storage",
