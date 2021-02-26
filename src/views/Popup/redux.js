@@ -30,6 +30,9 @@ const popupSlice = createSlice({
       state.mnemonic = action.payload;
       state.hdkey = HdKey.fromMasterSeed(bip39.mnemonicToSeedSync(state.mnemonic)).toJSON();
     },
+    setAccounts: (state, action) => {
+      state.accounts = action.payload;
+    },
     createAccount: (state, action) => {
       const index = state.accounts.length;
       const path = "m/44'/0'/0'/0/" + index;
@@ -97,4 +100,5 @@ export const {
   setAccountToSign,
   refuseSign,
   importAccount,
+  setAccounts,
 } = popupSlice.actions;
