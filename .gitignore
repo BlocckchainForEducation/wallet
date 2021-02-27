@@ -1,5 +1,6 @@
 /node_modules
 build
+build.pem
 *.log
 # :hatching_chick: init commit
 # :sparkles: new: handle request page
