@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button, Dialog, DialogActions, DialogContent, DialogTitle, IconButton, ListItemIcon, makeStyles, Menu, MenuItem, Paper, TextField, Typography } from "@material-ui/core";
+import { Button, Dialog, DialogActions, DialogContent, DialogTitle, IconButton, ListItemIcon, makeStyles, Menu, MenuItem, Paper, TextField, Tooltip, Typography } from "@material-ui/core";
 import { Add } from "@material-ui/icons";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import { createAccount, lockWallet, importAccount, toggleHidingAccountsVisible } from "../redux";
@@ -117,15 +117,19 @@ export default function CustomHeader() {
   return (
     <div className={cls.root}>
       {state.redirect}
-      <IconButton onClick={hdLockWallet} className={cls.leftBtn}>
-        <LockOutlinedIcon fontSize="large" />
-      </IconButton>
+      <Tooltip title="Khóa ví" enterDelay={500}>
+        <IconButton onClick={hdLockWallet} className={cls.leftBtn}>
+          <LockOutlinedIcon fontSize="large" />
+        </IconButton>
+      </Tooltip>
       <Typography className={cls.title} variant="h5">
         B4E Wallet
       </Typography>
-      <IconButton onClick={hdShowMenu} className={cls.rightBtn}>
-        <MoreVertIcon fontSize="large"></MoreVertIcon>
-      </IconButton>
+      <Tooltip title="Mở rộng" enterDelay={500}>
+        <IconButton onClick={hdShowMenu} className={cls.rightBtn}>
+          <MoreVertIcon fontSize="large"></MoreVertIcon>
+        </IconButton>
+      </Tooltip>
       <Paper>
         <Menu
           open={Boolean(state.anchorEl)}

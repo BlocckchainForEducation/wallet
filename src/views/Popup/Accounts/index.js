@@ -1,5 +1,6 @@
-import { Avatar, Badge, Box, Dialog, IconButton, List, ListItem, ListItemAvatar, ListItemSecondaryAction, ListItemText, makeStyles } from "@material-ui/core";
+import { Avatar, Badge, Box, Dialog, IconButton, List, ListItem, ListItemAvatar, ListItemText, makeStyles, Tooltip } from "@material-ui/core";
 import SettingsIcon from "@material-ui/icons/Settings";
+import VerticalAlignBottomIcon from "@material-ui/icons/VerticalAlignBottom";
 import React, { useState } from "react";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 import Jazzicon from "react-jazzicon/lib/Jazzicon";
@@ -8,9 +9,7 @@ import AccountDetail from "../AccountDetail";
 import { setAccounts } from "../redux";
 import Container from "../shared/Container";
 import CustomHeader from "./AccountsHeader";
-
-import VerticalAlignBottomIcon from "@material-ui/icons/VerticalAlignBottom";
-
+import VisibilityOffIcon from "@material-ui/icons/VisibilityOff";
 const useStyles = makeStyles({
   paper: {
     margin: "0",
@@ -66,6 +65,7 @@ export default function Accounts() {
                       <Draggable key={acc.id} draggableId={acc.id} index={index}>
                         {(provided) => (
                           <ListItem divider ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}>
+                            {/* <DragHandleIcon /> */}
                             <ListItemAvatar>
                               <Badge
                                 invisible={!acc.isImported}
@@ -76,15 +76,30 @@ export default function Accounts() {
                                 // overlap="circle"
                                 badgeContent={<VerticalAlignBottomIcon color="primary" />}
                               >
-                                <Avatar>
+                                <Badge
+                                  invisible={!acc.isHide}
+                                  anchorOrigin={{
+                                    vertical: "top",
+                                    horizontal: "right",
+                                  }}
+                                  // overlap="circle"
+                                  badgeContent={<VisibilityOffIcon color="primary" />}
+                                >
+                                  <Avatar>
+                                    <Jazzicon diameter={50} seed={acc.avatarSeed}></Jazzicon>
+                                  </Avatar>
+                                </Badge>
+                                {/* <Avatar>
                                   <Jazzicon diameter={50} seed={acc.avatarSeed}></Jazzicon>
-                                </Avatar>
+                                </Avatar> */}
                               </Badge>
                             </ListItemAvatar>
                             <ListItemText>{acc.name}</ListItemText>
-                            <IconButton edge="end" onClick={(e) => hdSettingClick(e, acc.id)}>
-                              <SettingsIcon></SettingsIcon>
-                            </IconButton>
+                            <Tooltip title="Cài đặt" enterDelay={500}>
+                              <IconButton edge="end" onClick={(e) => hdSettingClick(e, acc.id)}>
+                                <SettingsIcon></SettingsIcon>
+                              </IconButton>
+                            </Tooltip>
                           </ListItem>
                         )}
                       </Draggable>

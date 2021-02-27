@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Avatar, Box, Button, IconButton, InputAdornment, makeStyles, TextField } from "@material-ui/core";
 import { VisibilityOff, Visibility } from "@material-ui/icons";
-import { renameAccount, hideAccount } from "../redux";
+import { renameAccount, hideAccount, unHideAccount } from "../redux";
 import { useDispatch } from "react-redux";
 import Jazzicon from "react-jazzicon/lib/Jazzicon";
 
@@ -25,7 +25,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function AccountDetail(props) {
   const cls = useStyles();
-  const { id, avatarSeed, name, publicKey, privateKey, closeDiaglog } = props;
+  const { id, avatarSeed, name, publicKey, privateKey, isHide, closeDiaglog } = props;
   const [state, setState] = useState({ accountName: name, showPassword: false });
 
   const handleClickShowPassword = () => {
@@ -84,17 +84,32 @@ export default function AccountDetail(props) {
           Ok
         </Button>
         <Box mt={1}></Box>
-        <Button
-          variant="outlined"
-          // color="primary"
-          fullWidth
-          onClick={(e) => {
-            dp(hideAccount({ id: id }));
-            closeDiaglog();
-          }}
-        >
-          Ẩn tài khoản
-        </Button>
+        {!isHide && (
+          <Button
+            variant="outlined"
+            // color="primary"
+            fullWidth
+            onClick={(e) => {
+              dp(hideAccount({ id: id }));
+              closeDiaglog();
+            }}
+          >
+            Ẩn tài khoản
+          </Button>
+        )}
+        {isHide && (
+          <Button
+            variant="outlined"
+            // color="primary"
+            fullWidth
+            onClick={(e) => {
+              dp(unHideAccount({ id: id }));
+              closeDiaglog();
+            }}
+          >
+            Tắt ẩn tài khoản
+          </Button>
+        )}
       </Box>
     </Box>
   );

@@ -57,7 +57,9 @@ export default function Mnemonic() {
         <Header></Header>
         <Box p={2} className={cls.root}>
           <Typography variant="h4">Mã mnemonic bí mật</Typography>
-          <Typography>Mã mnemonic giúp bạn dễ dàng sao lưu vào khôi phục lại các tài khoản trong ví. Hãy lưu trữ mã này một cách an toàn và bảo mật.</Typography>
+          <Typography>
+            Mã mnemonic giúp bạn dễ dàng <b> sao lưu và khôi phục </b>lại các tài khoản trong ví. Hãy lưu trữ mã này một cách an toàn và bảo mật.
+          </Typography>
           <Typography>
             <b>CẢNH BÁO:</b> Không bao giờ tiết lộ mã này. Bất kì ai có mã này sẽ có quyền sử dụng các tài khoản của bạn.
           </Typography>
