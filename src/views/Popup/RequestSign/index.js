@@ -1,10 +1,10 @@
 import {
   Avatar,
+  Badge,
   Box,
   Button,
   Dialog,
   DialogActions,
-  DialogTitle,
   Divider,
   IconButton,
   List,
@@ -15,20 +15,19 @@ import {
   makeStyles,
   Typography,
 } from "@material-ui/core";
+import BlockIcon from "@material-ui/icons/Block";
+import CheckCircleOutlineIcon from "@material-ui/icons/CheckCircleOutline";
+import VerticalAlignBottomIcon from "@material-ui/icons/VerticalAlignBottom";
+import VpnKeyIcon from "@material-ui/icons/VpnKey";
 import React, { useState } from "react";
 import Jazzicon from "react-jazzicon/lib/Jazzicon";
 import { useDispatch, useSelector } from "react-redux";
-import { setAccountToSign, refuseSign } from "../redux";
+import { refuseSign, setAccountToSign } from "../redux";
 import Container from "../shared/Container";
 import Header from "../shared/Header";
-import VpnKeyIcon from "@material-ui/icons/VpnKey";
-import CheckCircleOutlineIcon from "@material-ui/icons/CheckCircleOutline";
-import { useSnackbar } from "notistack";
-import CheckCircleIcon from "@material-ui/icons/CheckCircle";
-import BlockIcon from "@material-ui/icons/Block";
 
 const useStyles = makeStyles((theme) => ({
-  title: { marginTop: theme.spacing(1) },
+  title: { marginTop: theme.spacing(2), marginBottom: theme.spacing(1) },
   paper: {
     margin: "0",
   },
@@ -37,9 +36,12 @@ const useStyles = makeStyles((theme) => ({
 export default function RequestSign() {
   const cls = useStyles();
   const accounts = useSelector((state) => state.accounts);
-  const [selectedAccId, setSelectedAccId] = useState(accounts[0]?.id);
+  const isTurnOnHidingAccounts = useSelector((state) => state.showHidingAccount);
+  const listAccountToShow = isTurnOnHidingAccounts ? accounts : accounts.filter((acc) => !acc.isHide);
+
+  const [selectedAccId, setSelectedAccId] = useState(listAccountToShow[0]?.id);
   const dp = useDispatch();
-  const { enqueueSnackbar } = useSnackbar();
+  // const { enqueueSnackbar } = useSnackbar();
   const [dialog, setDialog] = useState(null);
 
   function FeedbackDialog({ isAccept }) {
@@ -96,13 +98,22 @@ export default function RequestSign() {
             Chọn tài khoản:
           </Typography>
           <List>
-            {accounts.map((acc, index) => (
+            {listAccountToShow.map((acc, index) => (
               <React.Fragment key={acc.id}>
                 <ListItem button selected={acc.id === selectedAccId} onClick={(e) => setSelectedAccId(acc.id)}>
                   <ListItemAvatar>
-                    <Avatar>
-                      <Jazzicon diameter={50} seed={acc.avatarSeed}></Jazzicon>
-                    </Avatar>
+                    <Badge
+                      invisible={!acc.isImported}
+                      anchorOrigin={{
+                        vertical: "bottom",
+                        horizontal: "right",
+                      }}
+                      badgeContent={<VerticalAlignBottomIcon color="primary" />}
+                    >
+                      <Avatar>
+                        <Jazzicon diameter={50} seed={acc.avatarSeed}></Jazzicon>
+                      </Avatar>
+                    </Badge>
                   </ListItemAvatar>
                   <ListItemText>{acc.name}</ListItemText>
                   {acc.id === selectedAccId ? (
