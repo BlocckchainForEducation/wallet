@@ -38,11 +38,21 @@ const useStyles = makeStyles((theme) => ({
 
 function AskPrivateKeyDialog(props) {
   const [privateKey, setPrivateKey] = useState("");
+  const error = privateKey !== "" && !Boolean(privateKey.match(/[0-9A-Fa-f]{64}/g));
+
   return (
     <Dialog open={props.openDialog} onClose={props.hdCloseDialog}>
       <DialogTitle>Import tài khoản bằng Private Key</DialogTitle>
       <DialogContent>
-        <TextField label="Nhập private key" fullWidth InputLabelProps={{ shrink: true }} value={privateKey} onChange={(e) => setPrivateKey(e.target.value)}></TextField>
+        <TextField
+          label="Nhập private key"
+          fullWidth
+          InputLabelProps={{ shrink: true }}
+          value={privateKey}
+          onChange={(e) => setPrivateKey(e.target.value)}
+          error={error}
+          helperText="Private key gồm 64 kí tự hex"
+        ></TextField>
       </DialogContent>
       <DialogActions>
         <Button onClick={props.hdCancel}>Cancel</Button>
@@ -51,7 +61,9 @@ function AskPrivateKeyDialog(props) {
           color="primary"
           onClick={(e) => {
             e.stopPropagation();
-            props.hdOk(privateKey);
+            if (!error) {
+              props.hdOk(privateKey);
+            }
           }}
         >
           Ok
