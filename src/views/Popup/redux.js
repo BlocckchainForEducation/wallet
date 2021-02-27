@@ -71,6 +71,10 @@ const popupSlice = createSlice({
       const acc = state.accounts.find((acc) => acc.id === action.payload.id);
       acc.isHide = true;
     },
+    unHideAccount: (state, action) => {
+      const acc = state.accounts.find((acc) => acc.id === action.payload.id);
+      acc.isHide = false;
+    },
     toggleHidingAccountsVisible: (state) => {
       state.showHidingAccount = !state.showHidingAccount;
     },
@@ -104,6 +108,7 @@ export const {
   createAccount,
   renameAccount,
   hideAccount,
+  unHideAccount,
   toggleHidingAccountsVisible,
   lockWallet,
   unlockWallet,
