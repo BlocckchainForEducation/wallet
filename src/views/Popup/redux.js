@@ -17,6 +17,7 @@ const popupSlice = createSlice({
     isSignRequesting: false,
     accountToSign: null,
     origin: null,
+    showHidingAccount: false,
   },
   reducers: {
     setWalletPassword: (state, action) => {
@@ -66,6 +67,13 @@ const popupSlice = createSlice({
       const acc = state.accounts.find((acc) => acc.id === action.payload.id);
       acc.name = action.payload.name;
     },
+    hideAccount: (state, action) => {
+      const acc = state.accounts.find((acc) => acc.id === action.payload.id);
+      acc.isHide = true;
+    },
+    toggleHidingAccountsVisible: (state) => {
+      state.showHidingAccount = !state.showHidingAccount;
+    },
     lockWallet: (state, action) => {
       state.shouldAskPassword = true;
     },
@@ -95,6 +103,8 @@ export const {
   restoreWallet,
   createAccount,
   renameAccount,
+  hideAccount,
+  toggleHidingAccountsVisible,
   lockWallet,
   unlockWallet,
   requestSign,

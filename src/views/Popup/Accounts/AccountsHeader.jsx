@@ -2,13 +2,15 @@ import React, { useState } from "react";
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, IconButton, ListItemIcon, makeStyles, Menu, MenuItem, Paper, TextField, Typography } from "@material-ui/core";
 import { Add } from "@material-ui/icons";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
-import { createAccount, lockWallet, importAccount } from "../redux";
-import { useDispatch } from "react-redux";
+import { createAccount, lockWallet, importAccount, toggleHidingAccountsVisible } from "../redux";
+import { useDispatch, useSelector } from "react-redux";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
 import VerticalAlignBottomIcon from "@material-ui/icons/VerticalAlignBottom";
 import Fade from "@material-ui/core/Fade";
 import { Redirect } from "react-router-dom";
 import VisibilityIcon from "@material-ui/icons/Visibility";
+import VisibilityOffIcon from "@material-ui/icons/VisibilityOff";
+import VpnKeyIcon from "@material-ui/icons/VpnKey";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -61,12 +63,14 @@ function AskPrivateKeyDialog(props) {
 
 export default function CustomHeader() {
   const cls = useStyles();
-  const dp = useDispatch();
+  const hiddingAccountMode = useSelector((state) => state.showHidingAccount);
+
   const [state, setState] = useState({
     anchorEl: null,
     redirect: null,
     openDialog: false,
   });
+  const dp = useDispatch();
 
   function hdLockWallet() {
     dp(lockWallet());
@@ -102,6 +106,11 @@ export default function CustomHeader() {
   function hdOk(privateKey) {
     // TODO: validate private key
     dp(importAccount(privateKey));
+    setState({ anchorEl: null, openDialog: false });
+  }
+
+  function hdToggleVisibel() {
+    dp(toggleHidingAccountsVisible());
     setState({ anchorEl: null, openDialog: false });
   }
 
@@ -141,10 +150,25 @@ export default function CustomHeader() {
           </MenuItem>
           <MenuItem onClick={hdShowMnemonic}>
             <ListItemIcon classes={{ root: cls.overideMinWidth }}>
-              <VisibilityIcon />
+              <VpnKeyIcon />
             </ListItemIcon>
             <Typography variant="inherit">Xem mã Mnemonic</Typography>
           </MenuItem>
+          {hiddingAccountMode ? (
+            <MenuItem onClick={hdToggleVisibel}>
+              <ListItemIcon classes={{ root: cls.overideMinWidth }}>
+                <VisibilityOffIcon />
+              </ListItemIcon>
+              <Typography variant="inherit">Tắt tài khoản đã ẩn</Typography>
+            </MenuItem>
+          ) : (
+            <MenuItem onClick={hdToggleVisibel}>
+              <ListItemIcon classes={{ root: cls.overideMinWidth }}>
+                <VisibilityIcon />
+              </ListItemIcon>
+              <Typography variant="inherit">Hiển thị tài khoản đã ẩn</Typography>
+            </MenuItem>
+          )}
         </Menu>
       </Paper>
       <AskPrivateKeyDialog openDialog={state.openDialog} hdCloseDialog={hdCloseDialog} hdCancel={hdCloseDialog} hdOk={hdOk}></AskPrivateKeyDialog>

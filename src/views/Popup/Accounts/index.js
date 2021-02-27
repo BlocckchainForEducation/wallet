@@ -20,6 +20,7 @@ const useStyles = makeStyles({
 export default function Accounts() {
   const cls = useStyles();
   const accounts = useSelector((state) => state.accounts);
+  const isShowHidingAccount = useSelector((state) => state.showHidingAccount);
   const [dialog, setDialog] = useState(null);
 
   const dp = useDispatch();
@@ -29,7 +30,7 @@ export default function Accounts() {
     function closeDiaglog() {
       setDialog(null);
     }
-    const content = <AccountDetail {...acc} cb={closeDiaglog}></AccountDetail>;
+    const content = <AccountDetail {...acc} closeDiaglog={closeDiaglog}></AccountDetail>;
     const dialog = (
       <Dialog classes={{ paper: cls.paper }} open={true}>
         {content}
@@ -60,35 +61,35 @@ export default function Accounts() {
             <Droppable droppableId="Accounts">
               {(provided) => (
                 <List {...provided.droppableProps} ref={provided.innerRef}>
-                  {accounts.map((acc, index) => (
-                    <Draggable key={acc.id} draggableId={acc.id} index={index}>
-                      {(provided) => (
-                        <ListItem divider ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}>
-                          <ListItemAvatar>
-                            <Badge
-                              invisible={!acc.isImported}
-                              anchorOrigin={{
-                                vertical: "bottom",
-                                horizontal: "right",
-                              }}
-                              // overlap="circle"
-                              badgeContent={<VerticalAlignBottomIcon color="primary" />}
-                            >
-                              <Avatar>
-                                <Jazzicon diameter={50} seed={acc.avatarSeed}></Jazzicon>
-                              </Avatar>
-                            </Badge>
-                          </ListItemAvatar>
-                          <ListItemText>{acc.name}</ListItemText>
-                          {/* <ListItemSecondaryAction> */}
-                          <IconButton edge="end" onClick={(e) => hdSettingClick(e, acc.id)}>
-                            <SettingsIcon></SettingsIcon>
-                          </IconButton>
-                          {/* </ListItemSecondaryAction> */}
-                        </ListItem>
-                      )}
-                    </Draggable>
-                  ))}
+                  {accounts.map((acc, index) =>
+                    !isShowHidingAccount && acc.isHide ? null : (
+                      <Draggable key={acc.id} draggableId={acc.id} index={index}>
+                        {(provided) => (
+                          <ListItem divider ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}>
+                            <ListItemAvatar>
+                              <Badge
+                                invisible={!acc.isImported}
+                                anchorOrigin={{
+                                  vertical: "bottom",
+                                  horizontal: "right",
+                                }}
+                                // overlap="circle"
+                                badgeContent={<VerticalAlignBottomIcon color="primary" />}
+                              >
+                                <Avatar>
+                                  <Jazzicon diameter={50} seed={acc.avatarSeed}></Jazzicon>
+                                </Avatar>
+                              </Badge>
+                            </ListItemAvatar>
+                            <ListItemText>{acc.name}</ListItemText>
+                            <IconButton edge="end" onClick={(e) => hdSettingClick(e, acc.id)}>
+                              <SettingsIcon></SettingsIcon>
+                            </IconButton>
+                          </ListItem>
+                        )}
+                      </Draggable>
+                    )
+                  )}
                   {provided.placeholder}
                 </List>
               )}
