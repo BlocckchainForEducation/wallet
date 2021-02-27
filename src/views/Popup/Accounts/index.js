@@ -1,4 +1,4 @@
-import { Avatar, Box, Dialog, IconButton, List, ListItem, ListItemAvatar, ListItemSecondaryAction, ListItemText, makeStyles } from "@material-ui/core";
+import { Avatar, Badge, Box, Dialog, IconButton, List, ListItem, ListItemAvatar, ListItemSecondaryAction, ListItemText, makeStyles } from "@material-ui/core";
 import SettingsIcon from "@material-ui/icons/Settings";
 import React, { useState } from "react";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
@@ -8,6 +8,8 @@ import AccountDetail from "../AccountDetail";
 import { setAccounts } from "../redux";
 import Container from "../shared/Container";
 import CustomHeader from "./AccountsHeader";
+
+import VerticalAlignBottomIcon from "@material-ui/icons/VerticalAlignBottom";
 
 const useStyles = makeStyles({
   paper: {
@@ -63,9 +65,19 @@ export default function Accounts() {
                       {(provided) => (
                         <ListItem divider ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}>
                           <ListItemAvatar>
-                            <Avatar>
-                              <Jazzicon diameter={50} seed={acc.avatarSeed}></Jazzicon>
-                            </Avatar>
+                            <Badge
+                              invisible={!acc.isImported}
+                              anchorOrigin={{
+                                vertical: "bottom",
+                                horizontal: "right",
+                              }}
+                              // overlap="circle"
+                              badgeContent={<VerticalAlignBottomIcon color="primary" />}
+                            >
+                              <Avatar>
+                                <Jazzicon diameter={50} seed={acc.avatarSeed}></Jazzicon>
+                              </Avatar>
+                            </Badge>
                           </ListItemAvatar>
                           <ListItemText>{acc.name}</ListItemText>
                           {/* <ListItemSecondaryAction> */}

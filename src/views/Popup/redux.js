@@ -58,6 +58,7 @@ const popupSlice = createSlice({
         publicKey: publicKey,
         privateKey: privateKeyHex,
         avatarSeed: Math.round(Math.random() * 10000000),
+        isImported: true,
       };
       state.accounts.push(newAcc);
     },
