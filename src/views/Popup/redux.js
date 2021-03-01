@@ -4,7 +4,7 @@ import { uid } from "uid";
 const bip39 = require("bip39");
 const HdKey = require("hdkey");
 const secp256k1 = require("secp256k1");
-
+const { PrivateKey } = require("eciesjs");
 const popupSlice = createSlice({
   name: "popup",
   initialState: {
@@ -50,8 +50,7 @@ const popupSlice = createSlice({
     },
     importAccount: (state, action) => {
       const privateKeyHex = action.payload;
-      const privateKeyBuf = Buffer.from(privateKeyHex, "hex");
-      const publicKey = Buffer.from(secp256k1.publicKeyCreate(privateKeyBuf, true)).toString("hex");
+      const publicKey = PrivateKey.fromHex(privateKeyHex).publicKey.toHex(true);
       const index = state.accounts.length;
       const newAcc = {
         id: uid(),
