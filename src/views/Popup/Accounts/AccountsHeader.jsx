@@ -1,5 +1,20 @@
 import React, { useState } from "react";
-import { Button, Dialog, DialogActions, DialogContent, DialogTitle, IconButton, ListItemIcon, makeStyles, Menu, MenuItem, Paper, TextField, Tooltip, Typography } from "@material-ui/core";
+import {
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  IconButton,
+  ListItemIcon,
+  makeStyles,
+  Menu,
+  MenuItem,
+  Paper,
+  TextField,
+  Tooltip,
+  Typography,
+} from "@material-ui/core";
 import { Add } from "@material-ui/icons";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import { createAccount, lockWallet, importAccount, toggleHidingAccountsVisible } from "../redux";
@@ -116,7 +131,6 @@ export default function CustomHeader() {
   }
 
   function hdOk(privateKey) {
-    // TODO: validate private key
     dp(importAccount(privateKey));
     setState({ anchorEl: null, openDialog: false });
   }
@@ -187,7 +201,12 @@ export default function CustomHeader() {
           )}
         </Menu>
       </Paper>
-      <AskPrivateKeyDialog openDialog={state.openDialog} hdCloseDialog={hdCloseDialog} hdCancel={hdCloseDialog} hdOk={hdOk}></AskPrivateKeyDialog>
+      <AskPrivateKeyDialog
+        openDialog={state.openDialog}
+        hdCloseDialog={hdCloseDialog}
+        hdCancel={hdCloseDialog}
+        hdOk={hdOk}
+      ></AskPrivateKeyDialog>
     </div>
   );
 }

@@ -16,12 +16,13 @@ const getStore = async () => {
 // receive sign request from web page, send it to ext
 let checkpointRequestingState;
 window.addEventListener("message", hdSignRequest, false);
+
 async function hdSignRequest(e) {
   const store = await getStore();
   if (e.source !== window) return;
   if (e.data.type && e.data.type === "SIGN_REQUEST") {
     checkpointRequestingState = true;
-    store.dispatch(requestSign(e.origin));
+    store.dispatch(requestSign(e.data.tabId));
   }
 }
 
@@ -29,11 +30,11 @@ async function hdSignRequest(e) {
 async function handleRequestResponse() {
   const store = await getStore();
   let nowRequestingState = store.getState().isSignRequesting;
-  const origin = store.getState().origin;
+  const tabId = store.getState().tabId;
   // accepted or refused
   if (checkpointRequestingState !== nowRequestingState) {
     let accountToSign = store.getState().accountToSign;
-    window.postMessage({ type: "SIGN_RESPONSE", accept: Boolean(accountToSign), account: accountToSign }, origin);
+    window.postMessage({ type: "SIGN_RESPONSE", tabId, accept: Boolean(accountToSign), account: accountToSign });
   }
   checkpointRequestingState = nowRequestingState;
 }

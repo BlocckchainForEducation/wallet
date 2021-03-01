@@ -16,7 +16,7 @@ const popupSlice = createSlice({
     shouldAskPassword: false,
     isSignRequesting: false,
     accountToSign: null,
-    origin: null,
+    tabId: null,
     showHidingAccount: false,
   },
   reducers: {
@@ -85,7 +85,7 @@ const popupSlice = createSlice({
     },
     requestSign: (state, action) => {
       state.isSignRequesting = true;
-      state.origin = action.payload;
+      state.tabId = action.payload;
     },
     setAccountToSign: (state, action) => {
       state.accountToSign = state.accounts.find((acc) => acc.id === action.payload.id);
@@ -94,7 +94,7 @@ const popupSlice = createSlice({
     refuseSign: (state, action) => {
       state.accountToSign = null;
       state.isSignRequesting = false;
-      state.origin = null;
+      state.tabId = null;
     },
   },
 });
