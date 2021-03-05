@@ -1,4 +1,3 @@
-import React, { useState } from "react";
 import {
   Button,
   Dialog,
@@ -15,17 +14,18 @@ import {
   Tooltip,
   Typography,
 } from "@material-ui/core";
+import Fade from "@material-ui/core/Fade";
 import { Add } from "@material-ui/icons";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
-import { createAccount, lockWallet, importAccount, toggleHidingAccountsVisible } from "../redux";
-import { useDispatch, useSelector } from "react-redux";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
 import VerticalAlignBottomIcon from "@material-ui/icons/VerticalAlignBottom";
-import Fade from "@material-ui/core/Fade";
-import { Redirect } from "react-router-dom";
 import VisibilityIcon from "@material-ui/icons/Visibility";
 import VisibilityOffIcon from "@material-ui/icons/VisibilityOff";
 import VpnKeyIcon from "@material-ui/icons/VpnKey";
+import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Redirect } from "react-router-dom";
+import { createAccount, importAccount, lockWallet, toggleHidingAccountsVisible, turnOnDevmode } from "../redux";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -140,6 +140,11 @@ export default function CustomHeader() {
     setState({ anchorEl: null, openDialog: false });
   }
 
+  function hdTurnOnDevMode() {
+    dp(turnOnDevmode());
+    setState({ anchorEl: null, openDialog: false });
+  }
+
   return (
     <div className={cls.root}>
       {state.redirect}
@@ -199,6 +204,13 @@ export default function CustomHeader() {
               <Typography variant="inherit">Hiển thị tài khoản đã ẩn</Typography>
             </MenuItem>
           )}
+          {/* TODO: remove dev mode */}
+          <MenuItem onClick={hdTurnOnDevMode}>
+            <ListItemIcon classes={{ root: cls.overideMinWidth }}>
+              <VpnKeyIcon />
+            </ListItemIcon>
+            <Typography variant="inherit">Bật DevMode</Typography>
+          </MenuItem>
         </Menu>
       </Paper>
       <AskPrivateKeyDialog
