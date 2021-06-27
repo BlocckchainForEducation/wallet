@@ -16,6 +16,9 @@ const devmodeMap = {
   "SV Đỗ Hòa An": "dcbc581f8a1f73458eea31311ede5b16721628496f53ecf3c0e4cef4cbe02a4e",
   "SV Bùi Hải Anh": "1887157aeee14c71ab0b773912a83fbb9bba7c45c3c034135898e764b6599497",
   "SV Bùi Quang Anh": "8f30daa6af9de2b2fc5d8169dd5b55bed30501239a1117a11c638969bbaa7fcb",
+  "Tiểu Học Hương Mạc 1": "0b4d2f6255f771e511f75c2cd8b4f01df5d0caa7966b53ab0e67c547e40a114e",
+  "Trung học cơ sở HM1": "7df87fc9f422e242867973fb62b4492cddece9368dcfde7eafc59266667a74df",
+  "GV Nguyễn Thị An - HM1": "38dee1c5dc44d7c65de2255a7c06734c23fcc80a7bf27f963003461480bd8b8d",
 };
 
 const devmodeAccounts = Object.entries(devmodeMap).map((entry) => ({
